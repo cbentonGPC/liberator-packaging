@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>About — Liberator Packaging</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Space+Mono:wght@400;700&family=Barlow:ital,wght@0,200;0,300;0,400;1,200;1,300&display=swap');
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --bg:#111a24;--bg2:#172030;
+    --copper:#c4622d;--copper2:#d97840;
+    --stone:#8e8872;--steel:#5d7a94;
+    --white:#dce4ec;--fog:rgba(220,228,236,0.58);
+  }
+  body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-serif;overflow-x:hidden;font-size:18px;}
+
+  /* ── NAV ── */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:200;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:10px 56px;
+    background:#111a24f2;
+    border-bottom:1px solid rgba(93,122,148,0.15);
+    backdrop-filter:blur(10px);
+  }
+  .nav-logo{height:80px;width:auto;display:block;}
+  .nav-links{display:flex;gap:36px;list-style:none;}
+  .nav-links a{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.14em;color:rgba(93,122,148,1.0);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+  .nav-links a:hover{color:var(--white);}
+  .nav-links a.active{color:rgba(93,122,148,1.0);}
+  .nav-cta{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.12em;color:var(--copper);border:1px solid rgba(196,98,45,.8);padding:11px 24px;text-decoration:none;text-transform:uppercase;transition:all .25s;}
+  .nav-cta:hover{background:rgba(196,98,45,.12);}
+  .nav-links li{position:relative;}
+  .has-dropdown>a::after{content:' ▾';font-size:10px;opacity:1.0;}
+  .nav-dropdown{
+    display:none;position:absolute;top:100%;left:12px;margin-top:8px;
+    background:rgba(17,26,36,0.97);
+    border:1px solid rgba(93,122,148,.2);border-top:2px solid var(--copper);
+    min-width:210px;list-style:none;backdrop-filter:blur(10px);z-index:300;
+  }
+  .has-dropdown:hover .nav-dropdown{display:block;}
+  .nav-dropdown::before{content:'';position:absolute;top:-8px;left:0;right:0;height:8px;}
+  .nav-dropdown li a{
+    display:block;padding:12px 18px;
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;
+    color:rgba(93,122,148,1.0);text-decoration:none;text-transform:uppercase;
+    border-bottom:1px solid rgba(93,122,148,.1);transition:color .2s,background .2s;
+  }
+  .nav-dropdown li:last-child a{border-bottom:none;}
+  .nav-dropdown li a:hover{color:var(--white);background:rgba(93,122,148,.08);}
+
+  /* ── LOGO HERO ── */
+  .about-logo-hero{
+    min-height:62vh;position:relative;overflow:hidden;
+    margin-top:100px;
+  }
+  .about-logo-wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+  .about-logo-img{
+    width:78%; /* ← tweak to resize */
+    height:auto;
+  }
+  .about-logo-overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(to bottom,
+      rgba(17,26,36,0.2) 0%,transparent 25%,transparent 90%,
+      rgba(17,26,36,0.8) 90%,rgba(17,26,36,1) 100%);
+  }
+
+  /* ── PAGE HERO ── */
+  .page-hero{
+    padding:5px 56px 80px;
+    border-bottom:1px solid rgba(93,122,148,.12);
+    background:var(--bg);
+  }
+  .page-hero-inner{max-width:920px;}
+  .page-hero-sub{
+    font-family:'Space Mono',monospace;font-size:19px;letter-spacing:.28em;
+    color:var(--stone);text-transform:uppercase;margin-bottom:28px;
+  }
+  .page-hero-sub .dot{color:var(--copper2);}
+  .page-hero h1{
+    font-family:'Oswald',sans-serif;font-weight:600;
+    font-size:clamp(64px,9vw,112px);letter-spacing:.05em;
+    line-height:.9;color:var(--white);text-transform:uppercase;
+    margin-bottom:36px;
+  }
+  .page-hero h1 .sub{
+    font-weight:300;font-size:.30em;letter-spacing:.26em;
+    color:rgba(142,136,114,.45);display:block;margin-top:18px;
+  }
+  .page-hero-lede{
+    display:flex;gap:20px;align-items:flex-start;max-width:680px;margin-top:32px;
+  }
+  .page-hero-lede::before{content:'';flex:0 0 3px;height:145px;background:var(--copper);margin-top:4px;}
+  .page-hero-lede p{font-size:19px;font-weight:300;line-height:1.85;color:var(--fog);font-style:italic;}
+
+  /* ── ORIGIN / MISSION ── */
+  .origin{
+    display:grid;grid-template-columns:1fr 1fr;
+    border-top:1px solid rgba(93,122,148,.1);
+    min-height:560px;overflow:hidden;
+    background:var(--bg);
+  }
+  .origin-text{
+    padding:30px 64px;
+    display:flex;flex-direction:column;justify-content:top;
+    border-right:1px solid rgba(93,122,148,.1);
+  }
+  .section-tag{
+    font-family:'Space Mono',monospace;font-size:19px;letter-spacing:.22em;
+    color:var(--copper);text-transform:uppercase;margin-bottom:24px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .section-tag::before{content:'';width:25px;height:1px;background:var(--copper);}
+  .origin-text h2{
+    font-family:'Oswald',sans-serif;font-weight:300;font-size:44px;
+    letter-spacing:.06em;color:var(--white);text-transform:uppercase;
+    margin-bottom:28px;line-height:1.05;
+  }
+  .origin-text h2 strong{font-weight:600;color:var(--stone);}
+  .origin-text p{font-size:20px;font-weight:300;line-height:1.9;color:var(--fog);margin-bottom:20px;}
+  .origin-text p:last-child{margin-bottom:0;}
+  .origin-text p .accent{color:var(--copper);font-weight:400;font-style:normal;}
+  .origin-text p strong.emph{color:var(--white);font-weight:400;}
+
+  .origin-vis{
+    background:var(--bg2);position:relative;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .origin-vis-img{
+    width:100%;height:100%;object-fit:cover;
+    filter:grayscale(100%) contrast(160%) brightness(50%) sepia(35%) hue-rotate(8deg);
+    mix-blend-mode:luminosity;
+  }
+  .origin-vis-fade{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse 90% 80% at 50% 50%,transparent 20%,rgba(23,32,48,0.5) 70%,rgba(23,32,48,0.9) 100%),
+      linear-gradient(to left,transparent 50%,var(--bg2) 100%),
+      linear-gradient(to bottom,var(--bg2) 0%,transparent 10%,transparent 90%,var(--bg2) 100%);
+  }
+  .origin-vis-label{
+    position:absolute;bottom:22px;right:28px;
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.18em;
+    color:rgba(196,98,45,.5);text-transform:uppercase;z-index:2;
+  }
+  .origin-stats{
+    position:absolute;top:32px;left:32px;z-index:2;
+    display:flex;flex-direction:column;gap:18px;
+  }
+  .origin-stat{
+    border-left:2px solid var(--copper);padding-left:14px;
+  }
+  .origin-stat .num{
+    font-family:'Oswald',sans-serif;font-weight:500;font-size:28px;
+    letter-spacing:.04em;color:var(--white);line-height:1;
+  }
+  .origin-stat .lbl{
+    font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.2em;
+    color:rgba(196,98,45,1);text-transform:uppercase;margin-top:6px;
+  }
+
+  /* ── PRINCIPLES ── */
+  .principles{
+    padding:90px 56px;background:var(--bg2);
+    border-top:1px solid rgba(93,122,148,.12);
+    border-bottom:1px solid rgba(93,122,148,.12);
+  }
+  .principles-header{
+    display:flex;align-items:baseline;justify-content:space-between;
+    margin-bottom:56px;border-bottom:1px solid rgba(93,122,148,.12);
+    padding-bottom:20px;
+  }
+  .principles-header h2{
+    font-family:'Oswald',sans-serif;font-weight:300;font-size:44px;
+    letter-spacing:.08em;color:var(--white);text-transform:uppercase;
+  }
+  .principles-header h2 strong{font-weight:600;color:var(--stone);}
+  .principles-header span{
+    font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;
+    color:var(--copper);text-transform:uppercase;
+  }
+  .principles-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  }
+  .principle{
+    padding:36px 32px 36px 0;
+    border-right:1px solid rgba(93,122,148,.12);
+  }
+  .principle:last-child{border-right:none;}
+  .principle:not(:first-child){padding-left:32px;}
+  .principle .pnum{
+    font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.18em;
+    color:var(--copper);margin-bottom:18px;
+  }
+  .principle h3{
+    font-family:'Oswald',sans-serif;font-weight:500;font-size:22px;
+    letter-spacing:.06em;color:var(--white);text-transform:uppercase;
+    margin-bottom:14px;line-height:1.15;
+  }
+  .principle p{
+    font-size:15px;font-weight:300;line-height:1.75;color:var(--fog);
+  }
+
+  /* ── PROOF / CAPABILITY MARKERS ── */
+  .proof{
+    padding:90px 56px;background:var(--bg);
+    border-bottom:1px solid rgba(93,122,148,.1);
+  }
+  .proof-inner{display:grid;grid-template-columns:1fr 1.6fr;gap:80px;align-items:start;}
+  .proof-left h2{
+    font-family:'Oswald',sans-serif;font-weight:300;font-size:40px;
+    letter-spacing:.06em;color:var(--white);text-transform:uppercase;
+    line-height:1.1;margin-bottom:24px;
+  }
+  .proof-left h2 strong{font-weight:600;color:var(--stone);}
+  .proof-left p{font-size:16px;font-weight:300;line-height:1.85;color:var(--fog);}
+  .proof-list{display:flex;flex-direction:column;}
+  .proof-row{
+    display:grid;grid-template-columns:56px 1fr 280px;
+    align-items:center;gap:28px;
+    padding:22px 0;border-bottom:1px solid rgba(93,122,148,.1);
+  }
+  .proof-row:first-child{border-top:1px solid rgba(93,122,148,.1);}
+  .proof-num{font-family:'Space Mono',monospace;font-size:13px;color:var(--copper);letter-spacing:.1em;}
+  .proof-name{font-family:'Oswald',sans-serif;font-weight:400;font-size:22px;letter-spacing:.05em;color:var(--stone);text-transform:uppercase;}
+  .proof-detail{font-size:16px;font-weight:300;color:rgba(220,228,236,.55);font-style:italic;}
+
+  /* ── LEADERSHIP NOTE ── */
+  .leadership{
+    padding:90px 56px;background:var(--bg2);
+    border-top:1px solid rgba(93,122,148,.12);
+    border-bottom:1px solid rgba(93,122,148,.12);
+  }
+  .leadership-inner{max-width:880px;}
+  .leadership h2{
+    font-family:'Oswald',sans-serif;font-weight:300;font-size:40px;
+    letter-spacing:.06em;color:var(--white);text-transform:uppercase;
+    margin-bottom:28px;line-height:1.1;
+  }
+  .leadership h2 strong{font-weight:600;color:var(--stone);}
+  .leadership p{font-size:17px;font-weight:300;line-height:1.9;color:var(--fog);margin-bottom:18px;}
+  .leadership .sig{
+    margin-top:36px;padding-top:28px;
+    border-top:1px solid rgba(93,122,148,.15);
+    font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.18em;
+    color:var(--copper);text-transform:uppercase;
+  }
+
+  /* ── CTA ── */
+  .cta{
+    padding:100px 56px;background:var(--bg2);
+    border-top:1px solid rgba(93,122,148,.12);
+    text-align:center;position:relative;overflow:hidden;min-height:440px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .cta-plane-wrap{position:absolute;inset:0;}
+  .cta-plane-img{
+    width:100%;height:100%;object-fit:cover;object-position:center 20%;
+    filter:grayscale(100%) contrast(200%) brightness(35%) sepia(30%) hue-rotate(8deg);
+    mix-blend-mode:luminosity;opacity:.55;
+  }
+  .cta-overlay{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse 60% 60% at 50% 40%,rgba(23,32,48,0.3) 0%,rgba(23,32,48,0.85) 100%),
+      linear-gradient(to bottom,var(--bg2) 0%,transparent 20%,transparent 80%,var(--bg2) 100%);
+  }
+  .cta-content{position:relative;z-index:1;}
+  .cta-tag{font-family:'Space Mono',monospace;font-size:18px;letter-spacing:.18em;color:var(--copper);text-transform:uppercase;margin-bottom:20px;}
+  .cta h2{font-family:'Oswald',sans-serif;font-weight:300;font-size:clamp(40px,5vw,64px);letter-spacing:.08em;color:var(--white);text-transform:uppercase;margin-bottom:16px;line-height:1.05;}
+  .cta h2 strong{font-weight:600;color:var(--stone);}
+  .cta p{font-size:17px;font-weight:300;color:var(--fog);max-width:420px;margin:0 auto 40px;line-height:1.85;font-style:italic;}
+
+  /* ── FOOTER ── */
+  footer{padding:28px 56px;border-top:1px solid rgba(93,122,148,.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+  footer span{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;color:rgba(180,180,180,0.603);text-transform:uppercase;}
+
+  @keyframes rise{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+  .r1{animation:rise .9s ease .1s both;}
+  .r2{animation:rise .9s ease .3s both;}
+  .r3{animation:rise .9s ease .5s both;}
+  .r4{animation:rise .9s ease .7s both;}
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 980px){
+    .origin{grid-template-columns:1fr;}
+    .origin-text{border-right:none;border-bottom:1px solid rgba(93,122,148,.1);}
+    .origin-vis{min-height:320px;}
+    .principles-grid{grid-template-columns:repeat(2,1fr);}
+    .principle:nth-child(2){border-right:none;}
+    .principle:nth-child(3){border-top:1px solid rgba(93,122,148,.12);}
+    .principle:nth-child(4){border-top:1px solid rgba(93,122,148,.12);}
+    .proof-inner{grid-template-columns:1fr;gap:40px;}
+    .proof-row{grid-template-columns:48px 1fr;}
+    .proof-detail{grid-column:1 / -1;padding-left:76px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html"><img class="nav-logo" src="../Images/Logo/Simple (Star) no bg.png" alt="Liberator Packaging"></a>
+  <ul class="nav-links">
+    <li class="has-dropdown">
+      <a href="#">Capabilities</a>
+      <ul class="nav-dropdown">
+        <li><a href="assembly-kitting.html">Assembly &amp; Kitting</a></li>
+        <li><a href="corrugated-packaging.html">Corrugated Packaging</a></li>
+        <li><a href="foam-cushioning.html">Foam &amp; Cushioning Systems</a></li>
+        <li><a href="wood-crating.html">Wood Crating &amp; Export Containers</a></li>
+        <li><a href="integrated-solutions.html">Engineered Integrated Solutions</a></li>
+      </ul>
+    </li>
+    <li class="has-dropdown">
+      <a href="#">Packaging Applications</a>
+      <ul class="nav-dropdown">
+        <li><a href="drones.html">Drones</a></li>
+        <li><a href="munitions.html">Munitions</a></li>
+        <li><a href="manufactured-parts.html">Manufactured Parts</a></li>
+        <li><a href="electronic-components.html">Electronic Components</a></li>
+      </ul>
+    </li>
+    <li><a href="compliance.html">Compliance</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Contact Us</a>
+</nav>
+
+<!-- ── LOGO HERO ── -->
+<section class="about-logo-hero">
+  <div class="about-logo-wrap">
+    <img class="about-logo-img" src="../Images/Logo/Liberator Logo.jpg" alt="Liberator Packaging"/>
+    <div class="about-logo-overlay"></div>
+  </div>
+</section>
+
+<!-- ── PAGE HERO ── -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-hero-sub r2">Heritage <span class="dot">·</span> Discipline <span class="dot">·</span> Defense-First</div>
+    <div class="page-hero-lede r3">
+      <p>Liberator Packaging is a defense and aerospace packaging specialist headquartered in Richardson, Texas. We design, manufacture, and test mission-critical protective packaging for prime contractors, primes' tier-one suppliers, and program offices across every branch of service.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── ORIGIN / MISSION ── -->
+<section class="origin">
+  <div class="origin-text">
+    <div class="section-tag">Our Story</div>
+    <p>People running a 70 year old industrial packaging company saw a need for technical packaging support for growing aerospace & defense production. A heightened focus on cyber security requirements called for a company focused on security, engineering, design, and process-driven manufacturing. Liberator was created to respond to those needs.</p>
+    <!-- <p>Most packaging suppliers serving the defense industrial base started somewhere else — commercial shipping, retail consumer goods, industrial OEM — and bolted on MIL-STD capability as program demand grew. That history shows up in subtle ways: documentation that isn't quite right, ESD handling that's "close enough," ITAR controls layered on top of workflows that were never designed for them.</p> -->
+    <p>The name is a deliberate choice. The <strong>B-24 Liberator</strong> was the most-produced American military aircraft of WWII — over 18,000 bombers made by manufacturing teams who had to learn how to hold precision tolerances at extraordinary scale, under wartime deadlines, with no margin for failure. That standard of work — repeatable precision in service of the mission — is the standard we hold ourselves to.</p>
+    <p><span class="accent">Liberator Packaging</span> was established to do one thing: deliver protective packaging that meets defense and aerospace specifications, at scale.</p>  
+  </div>
+  <div class="origin-vis">
+    <img class="origin-vis-img" src="../Images/thf91632.jpg" alt="Defense manufacturing"/>
+    <div class="origin-vis-fade"></div>
+    <div class="origin-stats">
+    </div>
+    <div class="origin-vis-label">Liberator · Purpose-Built for A&amp;D</div>
+  </div>
+</section>
+
+<!-- ── PRINCIPLES ── -->
+<section class="principles">
+  <div class="principles-header">
+    <h2>How We <strong>Operate</strong></h2>
+    <span>Operating Principles · 04</span>
+  </div>
+  <div class="principles-grid">
+    <div class="principle">
+      <div class="pnum">01</div>
+      <h3>Earn the Clearance</h3>
+      <p>CMMC Level 2, ISO 9001, ITAR compliance, and an ISPM-15 stamp authority — we hold the credentials defense work requires and renew them on schedule. We earn your trust before the first pack is made.</p>
+    </div>
+    <div class="principle">
+      <div class="pnum">02</div>
+      <h3>Specifications Are Not Suggestions</h3>
+      <p>We take quality and security very seriously. MIL-STD, ASTM, ISTA, and ISPM-15 standards are the minimum requirements we adhere to. If the drawing calls it out, the part gets it.</p>
+    </div>
+    <div class="principle">
+      <div class="pnum">03</div>
+      <h3>Engineer Before You Cut</h3>
+      <p>Our in-house design team uses ArtiosCAD to model, prototype, and validate before a single sheet of corrugate or board foot of lumber gets touched. We take surprises out of the equation.</p>
+    </div>
+    <div class="principle">
+      <div class="pnum">04</div>
+      <h3>Produce to Perfection</h3>
+      <p>Our discipline and quality standards dictate we produce the highest quality product we can in a scalable way. We invest in the right people, processes, and technology to make it happen.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── LEADERSHIP / NOTE ── -->
+<section class="leadership">
+  <div class="leadership-inner">
+    <div class="section-tag">A Note From Leadership</div>
+    <h2>We build packaging for people who <strong>can't afford a failure.</strong></h2>
+    <p>The reason Liberator exists is simple: defense and aerospace work doesn't tolerate the same margin of error as commercial shipping, and the customers who run those programs deserve a packaging partner whose entire operation is built around that reality.</p>
+    <p>Every program we touch — whether it's a single prototype for a UAS developer or a recurring requirement for a prime — gets the same treatment: engineer it, test it, document it, ship it. We'd rather lose a bid than promise something we can't repeat at scale.</p>
+    <p>If you're protecting something that matters, we'd like to hear about it.</p>
+    <div class="sig">— Liberator Packaging Leadership</div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta">
+  <div class="cta-plane-wrap">
+    <img class="cta-plane-img" src="../Images/wood crates.png" alt="B-24 Liberator"/>
+    <div class="cta-overlay"></div>
+  </div>
+  <div class="cta-content">
+    <div class="cta-tag">Let's get to work</div>
+    <h2>Tell us what<br><strong>you're protecting.</strong></h2>
+    <p>Whether you're sourcing to MIL-STD requirements or need engineered packaging for a new program, we're ready to support your mission. Contact us to start the conversation.</p>
+    <a href="contact.html" class="nav-cta">Contact Us</a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Liberator Packaging · HQ in Richardson, TX</span>
+  <span>Aerospace &amp; Defense Packaging Solutions</span>
+</footer>
+
+</body>
+</html>

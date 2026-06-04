@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Space+Mono:wght@400;700&family=Barlow:ital,wght@0,200;0,300;0,400;1,200;1,300&display=swap');
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --bg:#111a24;--bg2:#172030;
+    --copper:#c4622d;--copper2:#d97840;
+    --stone:#8e8872;--steel:#5d7a94;
+    --white:#dce4ec;--fog:rgba(220,228,236,0.58);
+  }
+  body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-serif;overflow-x:hidden;font-size:18px;}
+
+  /* ── NAV ── */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:200;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:10px 56px;
+    background:#111a24f2;
+    border-bottom:1px solid rgba(93,122,148,0.15);
+    backdrop-filter:blur(10px);
+  }
+  .nav-logo{height:80px;width:auto;display:block;}
+  .nav-links{display:flex;gap:36px;list-style:none;}
+  .nav-links a{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.14em;color:rgba(93,122,148,1.0);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+  .nav-links a:hover{color:var(--white);}
+  .nav-cta{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.12em;color:var(--copper);border:1px solid rgba(196,98,45,.8);padding:11px 24px;text-decoration:none;text-transform:uppercase;transition:all .25s;}
+  .nav-cta:hover{background:rgba(196,98,45,.12);}
+
+  /* ── NAV DROPDOWN ── */
+  .nav-links li{position:relative;}
+  .has-dropdown>a::after{content:' ▾';font-size:10px;opacity:1.0;}
+  .nav-dropdown{
+    display:none;position:absolute;top:100%;left:12px;margin-top:8px;
+    background:rgba(17,26,36,0.97);
+    border:1px solid rgba(93,122,148,.2);border-top:2px solid var(--copper);
+    min-width:210px;list-style:none;backdrop-filter:blur(10px);
+    z-index:300;
+  }
+  .has-dropdown:hover .nav-dropdown{display:block;}
+  .nav-dropdown::before{content:'';position:absolute;top:-8px;left:0;right:0;height:8px;}
+  .nav-dropdown li a{
+    display:block;padding:12px 18px;
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;
+    color:rgba(93,122,148,1.0);text-decoration:none;text-transform:uppercase;
+    border-bottom:1px solid rgba(93,122,148,.1);transition:color .2s,background .2s;
+  }
+  .nav-dropdown li:last-child a{border-bottom:none;}
+  .nav-dropdown li a:hover{color:var(--white);background:rgba(93,122,148,.08);}
+
+  /* ── HERO ── */
+  .hero{
+    min-height:59vh;position:relative;overflow:hidden;
+  }
+  .hero-text{
+    position:relative;padding:0px 56px 72px;
+    background:var(--bg);
+    margin-top:-100px;
+  }
+  .plane-wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+  .plane-img{
+    width:100%;
+    height:auto;
+    filter:brightness(100%) contrast(100%) sepia(10%) hue-rotate(8deg);
+    mix-blend-mode:normal;
+    margin-top:15px;
+  }
+  .plane-overlay-base{position:absolute;inset:0;background:rgba(17,26,36,0.15);}
+  .plane-overlay-vignette{
+    position:absolute;inset:0;
+    background:radial-gradient(ellipse 80% 70% at 62% 38%,
+      transparent 0%,rgba(17,26,36,0.3) 45%,rgba(17,26,36,0.75) 70%,rgba(17,26,36,0.80) 100%);
+  }
+  .plane-overlay-bottom{
+    position:absolute;inset:0;
+    background:linear-gradient(to bottom,
+      rgba(17,26,36,0.2) 0%,transparent 25%,transparent 90%,
+      rgba(17,26,36,0.7) 88%,rgba(17,26,36,0.98) 100%);
+  }
+  .hero-grid{
+    position:absolute;inset:0;pointer-events:none;z-index:2;
+    /*-background-image:
+      linear-gradient(rgba(93,122,148,.035) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(93,122,148,.035) 1px,transparent 1px);
+    background-size:56px 56px-*/;
+  }
+  .hero::after{
+    content:'';position:absolute;inset:0;z-index:3;pointer-events:none;
+    background-image:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(17,26,36,0.06) 2px,rgba(17,26,36,0.06) 4px);
+  }
+
+  .hero-content{position:relative;z-index:10;max-width:680px;}
+
+  .hero-tag{
+    font-family:'Space Mono',monospace;font-size:15px;letter-spacing:.18em;
+    color:var(--copper);text-transform:uppercase;margin-bottom:32px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .hero-tag::before{content:'';width:32120mm px;height:1px;background:var(--copper);}
+
+  .hero-h1{
+    font-family:'Oswald',sans-serif;font-weight:600;
+    font-size:clamp(72px,10vw,80px);letter-spacing:.06em;
+    line-height:.9;color:var(--stone);text-transform:uppercase;
+  }
+  .hero-h1 .sub{
+    font-weight:300;font-size:.46em;letter-spacing:.26em;
+    color:rgba(142,136,114,.38);display:block;margin-top:12px;
+  }
+
+  .hero-desc{
+    margin:38px 0 52px;
+    display:flex;gap:20px;align-items:flex-start;max-width:520px;
+  }
+  .hero-desc::before{content:'';flex:0 0 3px;height:28px;background:var(--copper);margin-top:4px;}
+  .hero-desc p{font-size:18px;font-weight:300;line-height:1.8;color:var(--fog);font-style:italic;}
+
+  .hero-actions{display:flex;gap:24px;align-items:center;}
+  .btn-fill{
+    font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--copper);color:var(--bg);
+    padding:16px 36px;text-decoration:none;font-weight:700;
+    transition:background .2s;display:inline-block;
+  }
+  .btn-fill:hover{background:var(--copper2);}
+  .btn-ghost{
+    font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--steel);text-decoration:none;transition:color .2s;
+  }
+  .btn-ghost:hover{color:var(--white);}
+
+  .hero-coords{
+    position:absolute;bottom:24px;right:56px;
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;
+    color:rgba(93,122,148,.35);text-align:right;line-height:2;
+  }
+
+  /* ── COMPLIANCE ── */
+  .compliance{
+    display:flex;align-items:center;gap:40px;flex-wrap:wrap;
+    padding:32px 56px;
+    border-top:1px solid rgba(93,122,148,.12);
+    border-bottom:1px solid rgba(93,122,148,.12);
+    background:var(--bg2);
+  }
+  .comp-label{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.18em;color:var(--stone);text-transform:uppercase;white-space:nowrap;}
+  .comp-badges{display:flex;gap:12px;flex-wrap:wrap;}
+  .badge{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.09em;color:rgba(142,136,114,.55);border:1px solid rgba(142,136,114,.2);padding:7px 16px;text-transform:uppercase;}
+  .badge.on{color:var(--copper);border-color:rgba(196,98,45,.4);}
+
+  /* ── ABOUT ── */
+  .about{
+    display:grid;grid-template-columns:1fr 1fr;
+    border-top:1px solid rgba(93,122,148,.1);
+    min-height:420px;overflow:hidden;
+  }
+  .about-vis{
+    background:var(--bg2);position:relative;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+    border-right:1px solid rgba(93,122,148,.1);
+  }
+  .about-plane-img{
+    width:100%;height:100%;object-fit:cover;object-position:center center;
+    filter:grayscale(100%) contrast(160%) brightness(50%) sepia(35%) hue-rotate(8deg);
+    mix-blend-mode:luminosity;
+  }
+  .about-vis-fade{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse 90% 80% at 50% 50%,transparent 20%,rgba(23,32,48,0.5) 70%,rgba(23,32,48,0.9) 100%),
+      linear-gradient(to right,transparent 50%,var(--bg2) 100%),
+      linear-gradient(to bottom,var(--bg2) 0%,transparent 10%,transparent 90%,var(--bg2) 100%);
+  }
+  .about-vis-label{
+    position:absolute;bottom:22px;left:28px;
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.18em;
+    color:rgba(196,98,45,.5);text-transform:uppercase;z-index:2;
+  }
+  .about-text{padding:68px 56px;display:flex;flex-direction:column;justify-content:center;background:var(--bg2);}
+  .section-tag{font-family:'Space Mono',monospace;font-size:18px;letter-spacing:.2em;color:var(--copper);text-transform:uppercase;margin-bottom:20px;}
+  .about-text h2{font-family:'Oswald',sans-serif;font-weight:300;font-size:42px;letter-spacing:.08em;color:var(--white);text-transform:uppercase;margin-bottom:20px;line-height:1.1;}
+  .about-text h2 strong{font-weight:600;color:var(--stone);}
+  .about-text p{font-size:17px;font-weight:300;line-height:1.9;color:var(--fog);}
+
+  /* ── BRANCHES ── */
+  .branches{
+    padding:40px 0;overflow:hidden;
+    background:var(--bg2);
+    border-top:1px solid rgba(93,122,148,.12);
+    border-bottom:1px solid rgba(93,122,148,.12);
+  }
+  .branches-header{
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.22em;
+    color:var(--copper);text-transform:uppercase;
+    text-align:center;margin-bottom:28px;opacity:1;
+  }
+  .branches-track-wrap{overflow:hidden;position:relative;}
+  .branches-track-wrap::before,.branches-track-wrap::after{
+    content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none;
+  }
+  .branches-track-wrap::before{left:0;background:linear-gradient(to right,var(--bg2),transparent);}
+  .branches-track-wrap::after{right:0;background:linear-gradient(to left,var(--bg2),transparent);}
+  .branches-track{
+    display:flex;gap:16px;width:max-content;
+    animation:scroll-branches 38s linear infinite;
+  }
+  .branches-track:hover{animation-play-state:paused;}
+  @keyframes scroll-branches{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-50%);}
+  }
+  .branch-card{
+    flex:0 0 420px;height:200px;position:relative;overflow:hidden;
+    border:1px solid rgba(93,122,148,.12);
+    background:var(--bg);
+  }
+  .branch-card img{
+    width:100%;height:100%;object-fit:cover;
+    filter:grayscale(70%) contrast(120%) brightness(55%) sepia(20%) hue-rotate(8deg);
+    transition:filter .4s;
+  }
+  .branch-card:hover img{filter:grayscale(20%) contrast(110%) brightness(75%);}
+  .branch-card-overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(to top,rgba(17,26,36,.88) 0%,transparent 55%);
+  }
+  .branch-card-label{
+    position:absolute;bottom:0;left:0;right:0;padding:14px 16px;
+  }
+  .branch-card-label span{
+    display:block;font-family:'Space Mono',monospace;font-size:12px;
+    letter-spacing:.2em;color:var(--copper);text-transform:uppercase;margin-bottom:3px;
+  }
+  .branch-card-label strong{
+    font-family:'Oswald',sans-serif;font-weight:400;font-size:18px;
+    letter-spacing:.1em;color:var(--white);text-transform:uppercase;
+  }
+
+  /* ── CAPABILITIES ── */
+  .capabilities{
+    padding:80px 56px;position:relative;overflow:hidden;
+    background:url('../Images/capabilities6.png') center/cover no-repeat;
+  }
+  .capabilities::before{
+    content:'';position:absolute;inset:0;z-index:0;
+    background:rgba(17,26,36,0.72);
+  }
+  .capabilities .cap-header,.capabilities .cap-list{position:relative;z-index:1;}
+  .cap-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:48px;border-bottom:1px solid rgba(93,122,148,.12);padding-bottom:20px;}
+  .cap-header h2{font-family:'Oswald',sans-serif;font-weight:300;font-size:44px;letter-spacing:.08em;color:var(--white);text-transform:uppercase;}
+  .cap-header h2 strong{font-weight:600;color:var(--stone);}
+  .cap-header span{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;color:var(--copper);text-transform:uppercase;}
+  .cap-list{display:flex;flex-direction:column;}
+  .cap-row{
+    display:grid;grid-template-columns:56px 1fr 260px 28px;
+    align-items:center;gap:28px;
+    padding:22px 0;border-bottom:1px solid rgba(93,122,148,.1);
+    transition:all .2s;cursor:pointer;text-decoration:none;color:inherit;
+  }
+  .cap-row:hover .cap-name{color:var(--white);}
+  .cap-row:hover .cap-arr{opacity:1;color:var(--copper);}
+  .cap-row:hover .cap-detail{opacity:1;color:var(--white);}
+  .cap-num{font-family:'Space Mono',monospace;font-size:13px;color:var(--copper);letter-spacing:.1em;}
+  .cap-name{font-family:'Oswald',sans-serif;font-weight:400;font-size:24px;letter-spacing:.05em;color:var(--stone);text-transform:uppercase;transition:color .2s;}
+  .cap-detail{font-size:18px;font-weight:300;color:rgba(93,122,148,.65);font-style:italic;}
+  .cap-arr{font-size:24px;color:var(--steel);opacity:.3;transition:all .2s;justify-self:end;}
+
+  /* ── CTA ── */
+  .cta{
+    padding:100px 56px;background:var(--bg2);
+    border-top:1px solid rgba(93,122,148,.12);
+    text-align:center;position:relative;overflow:hidden;min-height:440px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .cta-plane-wrap{position:absolute;inset:0;}
+  .cta-plane-img{
+    width:100%;height:100%;object-fit:cover;object-position:center 20%;
+    filter:grayscale(100%) contrast(200%) brightness(35%) sepia(30%) hue-rotate(8deg);
+    mix-blend-mode:luminosity;opacity:.75;
+  }
+  .cta-overlay{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse 60% 60% at 50% 40%,rgba(23,32,48,0.3) 0%,rgba(23,32,48,0.85) 100%),
+      linear-gradient(to bottom,var(--bg2) 0%,transparent 50%,transparent 80%,var(--bg2) 100%);
+  }
+  .cta-content{position:relative;z-index:1;}
+  .cta-tag{font-family:'Space Mono',monospace;font-size:18px;letter-spacing:.18em;color:var(--copper);text-transform:uppercase;margin-bottom:20px;}
+  .cta h2{font-family:'Oswald',sans-serif;font-weight:300;font-size:clamp(40px,5vw,64px);letter-spacing:.08em;color:var(--white);text-transform:uppercase;margin-bottom:16px;line-height:1.05;}
+  .cta h2 strong{font-weight:600;color:var(--stone);}
+  .cta p{font-size:17px;font-weight:300;color:var(--fog);max-width:420px;margin:0 auto 40px;line-height:1.85;font-style:italic;}
+
+  /* ── FOOTER ── */
+  footer{padding:28px 56px;border-top:1px solid rgba(93,122,148,.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+  footer span{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;color:rgba(180, 180, 180, 0.603);text-transform:uppercase;}
+
+  @keyframes rise{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+  .r1{animation:rise .9s ease .1s both;}
+  .r2{animation:rise .9s ease .3s both;}
+  .r3{animation:rise .9s ease .5s both;}
+  .r4{animation:rise .9s ease .7s both;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html"><img class="nav-logo" src="../Images/Logo/Simple (Star) no bg.png" alt="Liberator Packaging"></a>
+  <ul class="nav-links">
+    <li class="has-dropdown">
+      <a href="#">Capabilities</a>
+      <ul class="nav-dropdown">
+        <li><a href="assembly-kitting.html">Assembly & Kitting</a></li>
+        <li><a href="corrugated-packaging.html">Corrugated Packaging</a></li>
+        <li><a href="foam-cushioning.html">Foam & Cushioning Systems</a></li>
+        <li><a href="wood-crating.html">Wood Crating & Export Containers</a></li>
+        <li><a href="integrated-solutions.html">Engineered Integrated Solutions</a></li>
+      </ul>
+    </li>
+    <li class="has-dropdown">
+      <a href="#">Packaging Applications</a>
+      <ul class="nav-dropdown">
+        <li><a href="drones.html">Drones</a></li>
+        <li><a href="munitions.html">Munitions</a></li>
+        <li><a href="manufactured-parts.html">Manufactured Parts</a></li>
+        <li><a href="electronic-components.html">Electronic Components</a></li>
+      </ul>
+    </li>
+    <li><a href="compliance.html">Compliance</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Contact Us</a>
+</nav>
+
+<section class="hero">
+  <div class="plane-wrap">
+    <img class="plane-img" src="../Images/Logo/plane on logo no bg.png" alt="B-24 Liberator"/>
+    <div class="plane-overlay-base"></div>
+    <div class="plane-overlay-vignette"></div>
+    <div class="plane-overlay-bottom"></div>
+  </div>
+  <div class="hero-grid"></div>
+</section>
+
+<section class="hero-text">
+  <div class="hero-content">
+    <div class="hero-tag r1">Aerospace &amp; Defense · MIL-SPEC Packaging</div>
+    <div class="hero-h1 r2">LIBERATOR<span class="sub">Packaging</span></div>
+    <div class="hero-desc r3">
+      <p>Tactical packaging for today's military and defense industry</p>
+    </div>
+    <div class="hero-actions r4">
+      <a href="contact.html" class="nav-cta">Contact Us</a>
+      <a href="#capabilities" class="btn-ghost">View Capabilities →</a>
+    </div>
+  </div>
+  <div class="hero-coords"></div>
+</section>
+
+<div class="compliance">
+  <span class="comp-label">Compliance Status</span>
+  <div class="comp-badges">
+    <span class="badge on">CMMC Level II — In Progress</span>
+    <span class="badge on">MIL-SPEC Compliant</span>
+    <span class="badge on">ISTA Certified Lab</span>
+    <span class="badge">ISO 9001 — Planned</span>
+  </div>
+</div>
+
+<div class="branches">
+  <div class="branches-header">Packaging for Every Branch of Service</div>
+  <div class="branches-track-wrap">
+    <div class="branches-track">
+      <!-- Set 1 -->
+      <div class="branch-card"><img src="../Images/missle.png" alt="Missiles"/><div class="branch-card-overlay"></div><div class="branch-card-label"><span>Munitions</span><strong>Missiles</strong></div></div>
+      <div class="branch-card"><img src="../Images/mortar.png" alt="Artillery"/><div class="branch-card-overlay"></div><div class="branch-card-label"><span>Munitions</span><strong>Artillery</strong></div></div>
+      <div class="branch-card"><img src="../Images/ammo box.png" alt="Ammo Boxes"/><div class="branch-card-overlay"></div><div class="branch-card-label"><span>Munitions</span><strong>Ammo Boxes</strong></div></div>
+      <div class="branch-card"><img src="../Images/drone.jpg" alt="Drones"/><div class="branch-card-overlay"></div><div class="branch-card-label"><span>Drones</span><strong>Drones</strong></div></div>
+      <div class="branch-card"><img src="../Images/helicopter parts.png" alt="Manufactured Parts"/><div class="branch-card-overlay"></div><div class="branch-card-label"><span>Manufactured Parts</span><strong>Helicopter Parts</strong></div></div>
+      <div class="branch-card"><img src="../Images/engine.jpg" alt="Engines"/><div class="branch-card-overlay"></div><div class="branch-card-label"><span>Manufactured Parts</span><strong>Engines</strong></div></div>
+      <div class="branch-card"><img src="../Images/server rack.png" alt="Server Crates"/><div class="branch-card-overlay"></div><div class="branch-card-label"><span>Electronic Components</span><strong>Server Rack Crates</strong></div></div>
+      <div class="branch-card"><img src="../Images/circuit board.jpg" alt="Circuit Board & Sensors"/><div class="branch-card-overlay"></div><div class="branch-card-label"><span>Electronic Components</span><strong>Circuit Board & Sensors</strong></div></div>
+      <!-- Set 2 — duplicate for seamless loop -->
+      <div class="branch-card"><img src="../Images/missle.png" alt="Missiles"/><div class="branch-card-overlay"></div><div class="branch-card-label"><span>Munitions</span><strong>Missiles</strong></div></div>
+      <div class="branch-card"><img src="../Images/mortar.png" alt="Artillery"/><div class="branch-card-overlay"></div><div class="branch-card-label"><span>Munitions</span><strong>Artillery</strong></div></div>
+      <div class="branch-card"><img src="../Images/ammo box.png" alt="Ammo Boxes"/><div class="branch-card-overlay"></div><div class="branch-card-label"><span>Munitions</span><strong>Ammo Boxes</strong></div></div>
+      <div class="branch-card"><img src="../Images/drone.jpg" alt="Drones"/><div class="branch-card-overlay"></div><div class="branch-card-label"><span>Drones</span><strong>Drones</strong></div></div>
+      <div class="branch-card"><img src="../Images/helicopter parts.png" alt="Manufactured Parts"/><div class="branch-card-overlay"></div><div class="branch-card-label"><span>>Manufactured Parts</span><strong>Helicopter Parts</strong></div></div>
+      <div class="branch-card"><img src="../Images/engine.jpg" alt="Engines"/><div class="branch-card-overlay"></div><div class="branch-card-label"><span>Manufactured Parts</span><strong>Engines</strong></div></div>
+      <div class="branch-card"><img src="../Images/server rack.png" alt="Server Crates"/><div class="branch-card-overlay"></div><div class="branch-card-label"><span>Electronic Components</span><strong>Server Rack Crates</strong></div></div>
+      <div class="branch-card"><img src="../Images/circuit board.jpg" alt="Circuit Board & Sensors"/><div class="branch-card-overlay"></div><div class="branch-card-label"><span>Electronic Components</span><strong>Circuit Board & Sensors</strong></div></div>
+
+    </div>
+  </div>
+</div>
+
+<section class="about">
+  <div class="about-vis">
+    <img class="about-plane-img" src="../Images/pexels-artguz-10842993.jpg" alt="Aerospace & Defense"/>
+    <div class="about-vis-fade"></div>
+    <div class="about-vis-label">HIMARS · mobile rocket launcher</div>
+  </div>
+  <div class="about-text">
+    <div class="section-tag">Who we are</div>
+    <h2>Built to <strong>protect the mission.</strong></h2>
+    <p>Liberator Packaging is a defense industry packaging specialist — named for the B-24 Liberator that helped define a new generation of American manufacturing. We design and manufacture mil-spec packaging solutions for anyone operating in the A&amp;D space, from prime contractors to maintenance depots.</p>
+  </div>
+</section>
+
+<section class="capabilities" id="capabilities">
+  <div class="cap-header">
+    <h2><strong>Core</strong> Capabilities</h2>
+    <span>A&amp;D Specializations · 05</span>
+  </div>
+  <div class="cap-list">
+    <a href="assembly-kitting.html" class="cap-row"><span class="cap-num">01</span><span class="cap-name">Assembly &amp; Kitting</span><span class="cap-detail">Multi-material · Component integration</span><span class="cap-arr">→</span></a>
+    <a href="corrugated-packaging.html" class="cap-row"><span class="cap-num">02</span><span class="cap-name">Corrugated Packaging</span><span class="cap-detail">MIL-SPEC · Anti-static · Moisture-resistant</span><span class="cap-arr">→</span></a>
+    <a href="foam-cushioning.html" class="cap-row"><span class="cap-num">03</span><span class="cap-name">Foam &amp; Cushioning Systems</span><span class="cap-detail">ESD-safe · Custom density · Precision-cut</span><span class="cap-arr">→</span></a>
+    <a href="wood-crating.html" class="cap-row"><span class="cap-num">04</span><span class="cap-name">Wood Crating &amp; Export Containers</span><span class="cap-detail">Heavy-duty · ISPM-15 · Export-compliant</span><span class="cap-arr">→</span></a>
+    <a href="integrated-solutions.html" class="cap-row"><span class="cap-num">05</span><span class="cap-name">Engineered Integrated Solutions</span><span class="cap-detail">In-house CAD · ArtiosCAD · Prototyping</span><span class="cap-arr">→</span></a>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="cta-plane-wrap">
+    <img class="cta-plane-img" src="../Images/155mm storage.png" alt="B-24 Liberator"/>
+    <div class="cta-overlay"></div>
+  </div>
+  <div class="cta-content">
+    <div class="cta-tag">Ready to work</div>
+    <h2>Tell us what<br><strong>you're protecting.</strong></h2>
+    <!-- <p>Need something custom? We'll design a new packaging solution and can build to spec.</p> -->
+    <p>We'll engineer a solution around your program, or bid existing requirements.</p>
+    <a href="contact.html" class="nav-cta">Contact Us</a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Liberator Packaging LLC · HQ in Richardson, TX</span>
+  <span>Aerospace &amp; Defense Packaging Solutions</span>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Compliance — Liberator Packaging</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Space+Mono:wght@400;700&family=Barlow:ital,wght@0,200;0,300;0,400;1,200;1,300&display=swap');
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --bg:#111a24;--bg2:#172030;
+    --copper:#c4622d;--copper2:#d97840;
+    --stone:#8e8872;--steel:#5d7a94;
+    --white:#dce4ec;--fog:rgba(220,228,236,0.58);
+  }
+  body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-serif;overflow-x:hidden;font-size:18px;}
+
+  /* ── NAV ── */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:200;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:10px 56px;
+    background:#111a24f2;
+    border-bottom:1px solid rgba(93,122,148,0.15);
+    backdrop-filter:blur(10px);
+  }
+  .nav-logo{height:80px;width:auto;display:block;}
+  .nav-links{display:flex;gap:36px;list-style:none;}
+  .nav-links a{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.14em;color:rgba(93,122,148,1.0);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+  .nav-links a:hover{color:var(--white);}
+  .nav-links a.active{color:var(--white);}
+  .nav-cta{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.12em;color:var(--copper);border:1px solid rgba(196,98,45,.8);padding:11px 24px;text-decoration:none;text-transform:uppercase;transition:all .25s;}
+  .nav-cta:hover{background:rgba(196,98,45,.12);}
+  .nav-links li{position:relative;}
+  .has-dropdown>a::after{content:' ▾';font-size:10px;opacity:1.0;}
+  .nav-dropdown{
+    display:none;position:absolute;top:100%;left:12px;margin-top:8px;
+    background:rgba(17,26,36,0.97);
+    border:1px solid rgba(93,122,148,.2);border-top:2px solid var(--copper);
+    min-width:210px;list-style:none;backdrop-filter:blur(10px);z-index:300;
+  }
+  .has-dropdown:hover .nav-dropdown{display:block;}
+  .nav-dropdown::before{content:'';position:absolute;top:-8px;left:0;right:0;height:8px;}
+  .nav-dropdown li a{
+    display:block;padding:12px 18px;
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;
+    color:rgba(93,122,148,1.0);text-decoration:none;text-transform:uppercase;
+    border-bottom:1px solid rgba(93,122,148,.1);transition:color .2s,background .2s;
+  }
+  .nav-dropdown li:last-child a{border-bottom:none;}
+  .nav-dropdown li a:hover{color:var(--white);background:rgba(93,122,148,.08);}
+
+  /* ── PAGE HERO ── */
+  .page-hero{
+    padding:160px 56px 80px;
+    border-bottom:1px solid rgba(93,122,148,.12);
+    position:relative;overflow:hidden;
+  }
+  .page-hero::before{
+    content:'';position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse 70% 60% at 80% 30%,rgba(196,98,45,.06) 0%,transparent 60%),
+      linear-gradient(to bottom,var(--bg) 0%,var(--bg2) 100%);
+    z-index:0;
+  }
+  .page-hero::after{
+    content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+    background-image:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(17,26,36,0.06) 2px,rgba(17,26,36,0.06) 4px);
+  }
+  .page-hero-inner{position:relative;z-index:2;max-width:920px;}
+  .page-hero-tag{
+    font-family:'Space Mono',monospace;font-size:15px;letter-spacing:.18em;
+    color:var(--copper);text-transform:uppercase;margin-bottom:32px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .page-hero-tag::before{content:'';width:32px;height:1px;background:var(--copper);}
+  .page-hero h1{
+    font-family:'Oswald',sans-serif;font-weight:600;
+    font-size:clamp(64px,9vw,112px);letter-spacing:.05em;
+    line-height:.9;color:var(--stone);text-transform:uppercase;
+    margin-bottom:36px;
+  }
+  .page-hero h1 .sub{
+    font-weight:300;font-size:.30em;letter-spacing:.26em;
+    color:rgba(142,136,114,.45);display:block;margin-top:18px;
+  }
+  .page-hero-lede{
+    display:flex;gap:20px;align-items:flex-start;max-width:680px;margin-top:32px;
+  }
+  .page-hero-lede::before{content:'';flex:0 0 3px;height:103px;background:var(--copper);margin-top:4px;}
+  .page-hero-lede p{font-size:19px;font-weight:300;line-height:1.85;color:var(--fog);font-style:italic;}
+
+  /* ── QUICK FACTS STRIP ── */
+  .facts{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    background:var(--bg2);
+    border-bottom:1px solid rgba(93,122,148,.12);
+  }
+  .fact{
+    padding:32px 36px;border-right:1px solid rgba(93,122,148,.12);
+  }
+  .fact:last-child{border-right:none;}
+  .fact .lbl{
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.2em;
+    color:rgba(196,98,45,.8);text-transform:uppercase;margin-bottom:10px;
+  }
+  .fact .val{
+    font-family:'Oswald',sans-serif;font-weight:500;font-size:22px;
+    letter-spacing:.04em;color:var(--white);text-transform:uppercase;line-height:1.2;
+  }
+  .fact .sub{
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;
+    color:rgba(220,228,236,.4);margin-top:6px;
+  }
+
+  /* ── SECTION SCAFFOLDING ── */
+  .section{padding:90px 56px;border-bottom:1px solid rgba(93,122,148,.12);}
+  .section.alt{background:var(--bg2);}
+  .section-header{
+    display:flex;align-items:baseline;justify-content:space-between;
+    margin-bottom:48px;border-bottom:1px solid rgba(93,122,148,.12);
+    padding-bottom:20px;flex-wrap:wrap;gap:16px;
+  }
+  .section-header h2{
+    font-family:'Oswald',sans-serif;font-weight:300;font-size:42px;
+    letter-spacing:.08em;color:var(--white);text-transform:uppercase;
+  }
+  .section-header h2 strong{font-weight:600;color:var(--stone);}
+  .section-header .count{
+    font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;
+    color:var(--copper);text-transform:uppercase;
+  }
+  .section-tag{
+    font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.22em;
+    color:var(--copper);text-transform:uppercase;margin-bottom:18px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .section-tag::before{content:'';width:28px;height:1px;background:var(--copper);}
+  .section-intro{
+    max-width:760px;font-size:17px;font-weight:300;line-height:1.85;
+    color:var(--fog);margin-bottom:48px;
+  }
+
+  /* ── CERT CARDS ── */
+  .cert-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:24px;
+  }
+  .cert-card{
+    background:var(--bg);
+    border:1px solid rgba(93,122,148,.15);
+    border-left:3px solid var(--copper);
+    padding:36px 32px;
+    display:flex;flex-direction:column;
+    transition:border-color .25s,background .25s;
+  }
+  .cert-card:hover{border-color:rgba(196,98,45,.4);}
+  .cert-card .cert-head{
+    display:flex;align-items:flex-start;justify-content:space-between;
+    margin-bottom:20px;gap:16px;
+  }
+  .cert-card .cert-title{
+    font-family:'Oswald',sans-serif;font-weight:500;font-size:24px;
+    letter-spacing:.05em;color:var(--white);text-transform:uppercase;line-height:1.1;
+  }
+  .cert-card .cert-status{
+    font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.18em;
+    color:var(--copper);border:1px solid rgba(196,98,45,.4);
+    padding:6px 12px;text-transform:uppercase;white-space:nowrap;
+  }
+  .cert-card .cert-desc{
+    font-size:15px;font-weight:300;line-height:1.75;
+    color:var(--fog);margin-bottom:22px;flex:1;
+  }
+  .cert-card .cert-meta{
+    border-top:1px solid rgba(93,122,148,.12);padding-top:16px;
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .cert-card .meta-row{
+    display:flex;justify-content:space-between;gap:12px;
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+  .cert-card .meta-row span:first-child{color:rgba(142,136,114,.7);}
+  .cert-card .meta-row span:last-child{color:var(--white);text-align:right;}
+
+  /* ── STANDARDS TABLE ── */
+  .std-list{display:flex;flex-direction:column;}
+  .std-row{
+    display:grid;grid-template-columns:200px 1fr 280px;
+    align-items:center;gap:32px;
+    padding:24px 0;border-bottom:1px solid rgba(93,122,148,.1);
+  }
+  .std-row:first-child{border-top:1px solid rgba(93,122,148,.1);}
+  .std-code{
+    font-family:'Space Mono',monospace;font-weight:700;font-size:15px;
+    letter-spacing:.08em;color:var(--copper);text-transform:uppercase;
+  }
+  .std-name{
+    font-family:'Oswald',sans-serif;font-weight:400;font-size:20px;
+    letter-spacing:.04em;color:var(--white);text-transform:uppercase;line-height:1.2;
+  }
+  .std-detail{
+    font-size:15px;font-weight:300;font-style:italic;
+    color:rgba(220,228,236,.55);line-height:1.5;
+  }
+
+  /* ── CTA ── */
+  .cta{
+    padding:100px 56px;background:var(--bg2);
+    border-top:1px solid rgba(93,122,148,.12);
+    text-align:center;position:relative;overflow:hidden;min-height:440px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .cta-plane-wrap{position:absolute;inset:0;}
+  .cta-plane-img{
+    width:100%;height:100%;object-fit:cover;object-position:center 20%;
+    filter:grayscale(100%) contrast(200%) brightness(35%) sepia(30%) hue-rotate(8deg);
+    mix-blend-mode:luminosity;opacity:.55;
+  }
+  .cta-overlay{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse 60% 60% at 50% 40%,rgba(23,32,48,0.3) 0%,rgba(23,32,48,0.85) 100%),
+      linear-gradient(to bottom,var(--bg2) 0%,transparent 20%,transparent 80%,var(--bg2) 100%);
+  }
+  .cta-content{position:relative;z-index:1;}
+  .cta-tag{font-family:'Space Mono',monospace;font-size:18px;letter-spacing:.18em;color:var(--copper);text-transform:uppercase;margin-bottom:20px;}
+  .cta h2{font-family:'Oswald',sans-serif;font-weight:300;font-size:clamp(40px,5vw,64px);letter-spacing:.08em;color:var(--white);text-transform:uppercase;margin-bottom:16px;line-height:1.05;}
+  .cta h2 strong{font-weight:600;color:var(--stone);}
+  .cta p{font-size:17px;font-weight:300;color:var(--fog);max-width:480px;margin:0 auto 40px;line-height:1.85;font-style:italic;}
+
+  /* ── FOOTER ── */
+  footer{padding:28px 56px;border-top:1px solid rgba(93,122,148,.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+  footer span{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;color:rgba(180,180,180,0.603);text-transform:uppercase;}
+
+  @keyframes rise{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+  .r1{animation:rise .9s ease .1s both;}
+  .r2{animation:rise .9s ease .3s both;}
+  .r3{animation:rise .9s ease .5s both;}
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 980px){
+    .facts{grid-template-columns:repeat(2,1fr);}
+    .fact:nth-child(2){border-right:none;}
+    .fact:nth-child(1),.fact:nth-child(2){border-bottom:1px solid rgba(93,122,148,.12);}
+    .cert-grid{grid-template-columns:1fr;}
+    .std-row{grid-template-columns:140px 1fr;gap:20px;}
+    .std-detail{grid-column:1 / -1;padding-left:160px;}
+    .ident-grid{grid-template-columns:1fr;}
+    .ident{border-right:none;border-bottom:1px solid rgba(93,122,148,.12);}
+    .ident:last-child{border-bottom:none;}
+    .sec-grid{grid-template-columns:1fr;gap:36px;}
+    .docs-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html"><img class="nav-logo" src="../Images/Logo/Simple (Star) no bg.png" alt="Liberator Packaging"></a>
+  <ul class="nav-links">
+    <li class="has-dropdown">
+      <a href="#">Capabilities</a>
+      <ul class="nav-dropdown">
+        <li><a href="assembly-kitting.html">Assembly &amp; Kitting</a></li>
+        <li><a href="corrugated-packaging.html">Corrugated Packaging</a></li>
+        <li><a href="foam-cushioning.html">Foam &amp; Cushioning Systems</a></li>
+        <li><a href="wood-crating.html">Wood Crating &amp; Export Containers</a></li>
+        <li><a href="integrated-solutions.html">Engineered Integrated Solutions</a></li>
+      </ul>
+    </li>
+    <li class="has-dropdown">
+      <a href="#">Packaging Applications</a>
+      <ul class="nav-dropdown">
+        <li><a href="drones.html">Drones</a></li>
+        <li><a href="munitions.html">Munitions</a></li>
+        <li><a href="manufactured-parts.html">Manufactured Parts</a></li>
+        <li><a href="electronic-components.html">Electronic Components</a></li>
+      </ul>
+    </li>
+    <li><a href="compliance.html" class="active">Compliance</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Contact Us</a>
+</nav>
+
+<!-- ── PAGE HERO ── -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-hero-tag r1">Compliance · Certifications · Standards</div>
+    <h1 class="r2">Audited. Certified.<br>Built To Spec.<span class="sub"> CMMC · ISO · ITAR · DFARS · MIL-STD</span></h1>
+    <div class="page-hero-lede r3">
+      <p>Every program we touch is built against a defined standard, documented in a verifiable record, and traceable from raw material through final shipment. This page is the single source of truth for our compliance posture.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── QUICK FACTS STRIP ── -->
+<div class="facts">
+  <div class="fact">
+    <div class="lbl">CMMC</div>
+    <div class="val">Level 2 Certified</div>
+    <div class="sub">C3PAO Assessed · NIST SP 800-171</div>
+  </div>
+  <div class="fact">
+    <div class="lbl">Quality System</div>
+    <div class="val">ISO 9001:2015 Equivalent</div>
+    <div class="sub">Certification In Process</div>
+  </div>
+  <div class="fact">
+    <div class="lbl">Test Lab</div>
+    <div class="val">ISTA Certified</div>
+    <div class="sub">Drop · Vibration · Environmental</div>
+  </div>
+  <div class="fact">
+    <div class="lbl">Export</div>
+    <div class="val">ITAR Registered</div>
+    <div class="sub">DDTC · ISPM-15 Stamp Authority</div>
+  </div>
+</div>
+
+<!-- ── CERTIFICATIONS ── -->
+<section class="section">
+  <div class="section-header">
+    <h2>Certifications <strong>Held</strong></h2>
+    <span class="count">Active Certifications · 04</span>
+  </div>
+  <p class="section-intro">Each certification listed below is current, registered to Liberator Packaging, and verifiable through the issuing body. Certificate copies and audit summaries are available on request as part of standard supplier qualification.</p>
+
+  <div class="cert-grid">
+
+    <div class="cert-card">
+      <div class="cert-head">
+        <div class="cert-title">CMMC Level 2</div>
+        <div class="cert-status">Certified</div>
+      </div>
+      <div class="cert-desc">Cybersecurity Maturity Model Certification at Level 2 — the standard required for handling Controlled Unclassified Information (CUI) on DoD contracts. Self-assessed after going through the easyCMMC program with CloudFit.</div>
+      <div class="cert-meta">
+        <div class="meta-row"><span>Assessor</span><span>Self-Assessed</span></div>
+        <div class="meta-row"><span>Cert ID</span><span>#xxxxxx</span></div>
+        <div class="meta-row"><span>Valid Through</span><span>xx/xx/xxxx</span></div>
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-head">
+        <div class="cert-title">ISO 9001:2015 Equivalent</div>
+        <div class="cert-status">In Process</div>
+      </div>
+      <div class="cert-desc">Quality Management System certified to ISO 9001:2015. Covers design, production, testing, and delivery of protective packaging and crating across all GPC operations. Audited annually by an accredited registrar.</div>
+      <div class="cert-meta">
+        <div class="meta-row"><span>Registrar</span><span>[TKTK]</span></div>
+        <div class="meta-row"><span>Cert No.</span><span>#xxxxxx</span></div>
+        <div class="meta-row"><span>Valid Through</span><span>xx/xx/xxxx</span></div>
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-head">
+        <div class="cert-title">ISTA Certified Lab</div>
+        <div class="cert-status">Certified</div>
+      </div>
+      <div class="cert-desc">In-house International Safe Transit Association certified test laboratory. Drop, vibration, compression, and environmental conditioning equipment on site, with test protocols aligned to ISTA Series 1, 2, 3, and 6 procedures.</div>
+      <div class="cert-meta">
+        <div class="meta-row"><span>Lab Member ID</span><span>4615</span></div>
+        <div class="meta-row"><span>Protocols</span><span>ISTA 1A</span></div>
+        <div class="meta-row"><span>Valid Through</span><span>08/01/2026</span></div>
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-head">
+        <div class="cert-title">ISPM-15 Stamp Authority</div>
+        <div class="cert-status">Certified</div>
+      </div>
+      <div class="cert-desc">Authorized to heat-treat and stamp wood packaging material under ISPM-15, the international phytosanitary standard required for export crates and pallets. Certified through the American Lumber Standard Committee (ALSC) program.</div>
+      <div class="cert-meta">
+        <div class="meta-row"><span>Stamp ID</span><span>[TKTK]</span></div>
+        <div class="meta-row"><span>Treatment</span><span>Heat Treatment (HT)</span></div>
+        <div class="meta-row"><span>Inspecting Agency</span><span>[TKTK]</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── STANDARDS WE BUILD TO ── -->
+<!-- <section class="section alt">
+  <div class="section-header">
+    <h2>Standards We <strong>Build To</strong></h2>
+    <span class="count">Active Specifications · 09</span>
+  </div>
+  <p class="section-intro">Certifications are how we operate; standards are how we manufacture. Below are the specifications we routinely build and document against. If a program references a standard not listed here, our engineering team will review the requirement during quoting and confirm conformance capability up front.</p>
+
+  <div class="std-list">
+
+    <div class="std-row">
+      <div class="std-code">MIL-STD-2073-1</div>
+      <div class="std-name">Standard Practice for Military Packaging</div>
+      <div class="std-detail">Method of preservation, packing levels A/B/C, cushioning &amp; barrier selection</div>
+    </div>
+
+    <div class="std-row">
+      <div class="std-code">MIL-STD-129R</div>
+      <div class="std-name">Military Marking for Shipment &amp; Storage</div>
+      <div class="std-detail">Container marking, MIL bar codes, RFID where required, IUID labels</div>
+    </div>
+
+    <div class="std-row">
+      <div class="std-code">MIL-STD-130N</div>
+      <div class="std-name">Identification Marking of U.S. Military Property</div>
+      <div class="std-detail">Item Unique Identification (IUID) marking on items and containers</div>
+    </div>
+
+    <div class="std-row">
+      <div class="std-code">ASTM D6251</div>
+      <div class="std-name">Wood-Cleated Panelboard Shipping Boxes</div>
+      <div class="std-detail">Heavy-duty crating construction for industrial &amp; defense shipments</div>
+    </div>
+
+    <div class="std-row">
+      <div class="std-code">ASTM D6880</div>
+      <div class="std-name">Wood Boxes (Heavy Duty)</div>
+      <div class="std-detail">Sheathed and cleated wooden box construction for export</div>
+    </div>
+
+    <div class="std-row">
+      <div class="std-code">ANSI/ESD S20.20</div>
+      <div class="std-name">ESD Control Program</div>
+      <div class="std-detail">Static-controlled handling for electronics, avionics &amp; sensitive assemblies</div>
+    </div>
+
+    <div class="std-row">
+      <div class="std-code">ISPM-15</div>
+      <div class="std-name">International Phytosanitary Standard</div>
+      <div class="std-detail">Heat-treated, stamped wood packaging for international shipment</div>
+    </div>
+
+    <div class="std-row">
+      <div class="std-code">PPP-B-601</div>
+      <div class="std-name">Wood Cleated-Plywood Boxes</div>
+      <div class="std-detail">Federal specification for plywood-cleated shipping containers</div>
+    </div>
+
+    <div class="std-row">
+      <div class="std-code">PPP-B-621</div>
+      <div class="std-name">Wood Nailed &amp; Lock-Corner Boxes</div>
+      <div class="std-detail">Federal specification for nailed wooden box construction</div>
+    </div>
+
+  </div>
+</section> -->
+
+<!-- ── CTA ── -->
+<section class="cta">
+  <div class="cta-plane-wrap">
+    <img class="cta-plane-img" src="../Images/pexels-lio-voo-262755153-12748681.jpg" alt="B-24 Liberator"/>
+    <div class="cta-overlay"></div>
+  </div>
+  <div class="cta-content">
+    <div class="cta-tag">Vendor Qualification</div>
+    <h2>Need our<br><strong>compliance packet?</strong></h2>
+    <p>Contact our compliance team for the full supplier qualification packet, certificate copies, or program-specific documentation.</p>
+    <a href="contact.html" class="nav-cta">Contact Compliance</a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Liberator Packaging · HQ in Richardson, TX</span>
+  <span>Aerospace &amp; Defense Packaging Solutions</span>
+</footer>
+
+</body>
+</html>

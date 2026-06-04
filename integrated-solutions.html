@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Space+Mono:wght@400;700&family=Barlow:ital,wght@0,200;0,300;0,400;1,200;1,300&display=swap');
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --bg:#111a24;--bg2:#172030;
+    --copper:#c4622d;--copper2:#d97840;
+    --stone:#8e8872;--steel:#5d7a94;
+    --white:#dce4ec;--fog:rgba(220,228,236,0.58);
+  }
+  body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-serif;overflow-x:hidden;font-size:18px;}
+
+  /* NAV */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:200;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px 56px;
+    background:#111a24f2;
+    border-bottom:1px solid rgba(93,122,148,0.15);
+    backdrop-filter:blur(10px);
+  }
+  .nav-logo{height:60px;width:auto;display:block;}
+  .nav-links{display:flex;gap:36px;list-style:none;}
+  .nav-links a{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.14em;color:rgba(93,122,148,.8);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+  .nav-links a:hover{color:var(--white);}
+  .nav-cta{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.12em;color:var(--copper);border:1px solid rgba(196,98,45,.5);padding:11px 24px;text-decoration:none;text-transform:uppercase;transition:all .25s;}
+  .nav-cta:hover{background:rgba(196,98,45,.12);}
+  .nav-links li{position:relative;}
+  .has-dropdown>a::after{content:' ▾';font-size:10px;opacity:.6;}
+  .nav-dropdown{
+    display:none;position:absolute;top:100%;left:12px;margin-top:8px;
+    background:rgba(17,26,36,0.97);
+    border:1px solid rgba(93,122,148,.2);border-top:2px solid var(--copper);
+    min-width:210px;list-style:none;backdrop-filter:blur(10px);z-index:300;
+  }
+  .has-dropdown:hover .nav-dropdown{display:block;}
+  .nav-dropdown::before{content:'';position:absolute;top:-8px;left:0;right:0;height:8px;}
+  .nav-dropdown li a{
+    display:block;padding:12px 18px;
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;
+    color:rgba(93,122,148,.8);text-decoration:none;text-transform:uppercase;
+    border-bottom:1px solid rgba(93,122,148,.1);transition:color .2s,background .2s;
+  }
+  .nav-dropdown li:last-child a{border-bottom:none;}
+  .nav-dropdown li a:hover{color:var(--white);background:rgba(93,122,148,.08);}
+
+  /* HERO */
+  .hero{
+    padding:90px 56px 15px;
+    border-bottom:1px solid rgba(93,122,148,.1);
+    display:flex;align-items:center;gap:64px;
+  }
+  .hero-content{flex:1;min-width:900px;}
+  .hero-image{flex:0 0 400px;width:100px;display:flex;align-items:center;justify-content:center;margin-right:300px;}
+  .hero-image img{
+    width:150%;height:auto;display:block;
+    -webkit-mask-image:linear-gradient(to right, transparent, black 18%, black 82%, transparent),
+                       linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+    -webkit-mask-composite:destination-in;
+    mask-image:linear-gradient(to right, transparent, black 18%, black 82%, transparent),
+               linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+    mask-composite:intersect;
+  }
+  .hero-tag{
+    font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.2em;
+    color:var(--copper);text-transform:uppercase;margin-bottom:32px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .hero-tag::before{content:'';width:32px;height:1px;background:var(--copper);}
+  .hero h1{
+    font-family:'Oswald',sans-serif;font-weight:600;
+    font-size:clamp(56px,8vw,88px);letter-spacing:.05em;
+    line-height:.88;color:var(--stone);text-transform:uppercase;
+    max-width:720px;margin-bottom:48px;
+  }
+  .hero h1 em{
+    font-style:normal;font-weight:300;font-size:.48em;letter-spacing:.26em;
+    color:rgba(142,136,114,.32);display:block;margin-top:16px;
+  }
+  .hero-desc{
+    display:flex;gap:20px;align-items:flex-start;max-width:540px;
+  }
+  .hero-desc::before{content:'';flex:0 0 3px;height:92px;background:var(--copper);margin-top:5px;}
+  .hero-desc p{font-size:17px;font-weight:300;line-height:1.85;color:var(--fog);font-style:italic;}
+
+  /* SUMMARY */
+  .summary{
+    padding:80px 56px;
+    background:var(--bg2);
+    border-bottom:1px solid rgba(93,122,148,.1);
+  }
+  .summary-inner{
+    display:grid;grid-template-columns:1fr 1.5fr;
+    gap:80px;align-items:start;
+  }
+  .section-tag{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--copper);text-transform:uppercase;margin-bottom:20px;}
+  .summary-left h2{font-family:'Oswald',sans-serif;font-weight:300;font-size:38px;letter-spacing:.08em;color:var(--white);text-transform:uppercase;line-height:1.1;}
+  .summary-left h2 strong{font-weight:600;color:var(--stone);}
+  .summary-right>p{font-size:16px;font-weight:300;line-height:1.9;color:var(--fog);margin-bottom:40px;}
+  .summary-pillars{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    border:1px solid rgba(93,122,148,.12);
+  }
+  .pillar{
+    padding:22px 24px;
+    border-right:1px solid rgba(93,122,148,.12);
+  }
+  .pillar:last-child{border-right:none;}
+  .pillar-label{font-family:'Space Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.18em;color:var(--copper);text-transform:uppercase;margin-bottom:8px;opacity:0.85;}
+  .pillar-val{font-family:'Oswald',sans-serif;font-weight:400;font-size:18px;letter-spacing:.06em;color:var(--white);text-transform:uppercase;margin-bottom:8px;}
+  .pillar-desc{font-size:13px;font-weight:300;line-height:1.7;color:rgba(220,228,236,.4);}
+
+  /* PROGRAMS */
+  .programs-header{
+    padding:56px 56px 0;
+    border-top:1px solid rgba(93,122,148,.1);
+  }
+  .programs-header h2{
+    font-family:'Oswald',sans-serif;font-weight:600;font-size:40px;
+    letter-spacing:.06em;color:var(--white);text-transform:uppercase;
+    line-height:1;padding-bottom:40px;
+    border-bottom:1px solid rgba(93,122,148,.1);
+  }
+  .programs-header h2 span{font-weight:300;color:var(--stone);}
+  .programs{
+    display:grid;grid-template-columns:1fr 1fr;
+    border-bottom:1px solid rgba(93,122,148,.1);
+  }
+  .program{
+    padding:72px 56px;
+    border-right:1px solid rgba(93,122,148,.1);
+    position:relative;
+    transition:background .25s;
+  }
+  .program:last-child{border-right:none;}
+  .program::after{
+    content:'';position:absolute;top:0;left:0;right:0;height:2px;
+    background:var(--copper);transform:scaleX(0);transform-origin:left;
+    transition:transform .4s ease;
+  }
+  .program:hover::after{transform:scaleX(1);}
+  .program:hover{background:rgba(23,32,48,.4);}
+  .prog-badge{position:absolute;top:24px;right:24px;height:100px;width:auto;opacity:0.85;}
+  .prog-eyebrow{
+    font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.22em;
+    color:var(--steel);text-transform:uppercase;margin-bottom:20px;
+    opacity:.7;
+  }
+  .program h2{
+    font-family:'Oswald',sans-serif;font-weight:600;font-size:32px;
+    letter-spacing:.06em;color:var(--white);text-transform:uppercase;
+    margin-bottom:6px;line-height:1;
+  }
+  .program h2 span{font-weight:300;color:var(--stone);}
+  .prog-ref{
+    font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;
+    color:var(--copper);font-weight:400;text-transform:uppercase;margin-bottom:28px;
+  }
+  .program p{
+    font-size:15px;font-weight:300;line-height:1.85;color:var(--fog);
+    margin-bottom:36px;
+  }
+  .spec-list{list-style:none;border-top:1px solid rgba(93,122,148,.1);}
+  .spec-list li{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding:11px 0;border-bottom:1px solid rgba(93,122,148,.07);
+    gap:20px;
+  }
+  .spec-list li:last-child{border-bottom:none;}
+  .spec-k{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;color:var(--stone);text-transform:uppercase;white-space:nowrap;flex-shrink:0;}
+  .spec-v{font-size:14px;font-weight:300;color:var(--white);text-align:right;}
+
+  /* STANDARDS */
+  .standards{
+    padding:26px 56px;
+    display:flex;align-items:center;gap:36px;flex-wrap:wrap;
+    background:var(--bg2);
+    border-bottom:1px solid rgba(93,122,148,.1);
+  }
+  .std-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--fog);text-transform:uppercase;white-space:nowrap;}
+  .std-list{display:flex;gap:8px;flex-wrap:wrap;}
+  .std{
+    font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;
+    color:rgba(142,136,114,.65);border:1px solid rgba(142,136,114,.16);
+    padding:5px 13px;text-transform:uppercase;
+  }
+  .std.hi{color:rgba(196,98,45,.8);border-color:rgba(196,98,45,.25);}
+
+  /* CAPABILITIES */
+  .capabilities{
+    padding:50px 56px;
+    border-bottom:1px solid rgba(93,122,148,.1);
+  }
+  .cap-header{
+    display:flex;align-items:baseline;justify-content:space-between;
+    margin-bottom:36px;padding-bottom:16px;
+    border-bottom:1px solid rgba(93,122,148,.1);
+  }
+  .cap-header h2{font-family:'Oswald',sans-serif;font-weight:300;font-size:34px;letter-spacing:.08em;color:var(--white);text-transform:uppercase;}
+  .cap-header h2 strong{font-weight:600;color:var(--stone);}
+  .cap-header span{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--copper);text-transform:uppercase;}
+  .cap-row{
+    display:grid;grid-template-columns:48px 1fr 260px 24px;
+    align-items:center;gap:24px;
+    padding:18px 0;border-bottom:1px solid rgba(93,122,148,.07);
+    transition:all .15s;
+  }
+  .cap-row:last-child{border-bottom:none;}
+  .cap-row:hover .cap-name{color:var(--white);}
+  .cap-row:hover .cap-detail{color:var(--white);}
+  .cap-row:hover .cap-arr{opacity:1;color:var(--copper);}
+  .cap-num{font-family:'Space Mono',monospace;font-size:12px;color:var(--copper);letter-spacing:.1em;}
+  .cap-name{font-family:'Oswald',sans-serif;font-weight:400;font-size:21px;letter-spacing:.05em;color:var(--stone);text-transform:uppercase;transition:color .15s;}
+  .cap-detail{font-size:14px;font-weight:300;color:rgba(93,122,148,.5);font-style:italic;}
+  .cap-arr{font-size:18px;color:var(--steel);opacity:.2;transition:all .15s;justify-self:end;}
+
+  /* CTA */
+  .cta{
+    padding:88px 56px;
+    display:flex;align-items:center;justify-content:space-between;gap:48px;flex-wrap:wrap;
+    background:var(--bg2);
+  }
+  .cta-tag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.22em;color:var(--copper);text-transform:uppercase;margin-bottom:16px;}
+  .cta h2{font-family:'Oswald',sans-serif;font-weight:300;font-size:clamp(34px,4vw,52px);letter-spacing:.08em;color:var(--white);text-transform:uppercase;line-height:1.05;}
+  .cta h2 strong{font-weight:600;color:var(--stone);}
+  .cta p{font-size:15px;font-weight:300;color:var(--fog);max-width:360px;margin-top:14px;line-height:1.8;font-style:italic;}
+
+  /* FOOTER */
+  footer{padding:26px 56px;border-top:1px solid rgba(93,122,148,.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+  footer span{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;color:rgba(180,180,180,.45);text-transform:uppercase;}
+
+  /* PROGRAM BACKGROUNDS */
+  #ground-up-design {
+    background-image:
+      linear-gradient(rgba(17,26,36,0.80), rgba(17,26,36,0.85)),
+      url('Products/IdealPack.svg');
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  #ground-up-design:hover {
+    background-image:
+      linear-gradient(rgba(23,32,48,0.70), rgba(23,32,48,0.70)),
+      url('Products/IdealPack.svg');
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  #reverse-engineer {
+    background-image:
+      linear-gradient(rgba(17,26,36,0.80), rgba(17,26,36,0.80)),
+      url('Products/Reverse%20Engineered%20Solution.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  #reverse-engineer:hover {
+    background-image:
+      linear-gradient(rgba(23,32,48,0.50), rgba(23,32,48,0.50)),
+      url('Products/Reverse%20Engineered%20Solution.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  /* APPLICATIONS SCROLL */
+  .app-scroll-section{
+    padding:54px 56px;
+    border-bottom:1px solid rgba(93,122,148,.1);
+  }
+  .app-scroll-hd{
+    display:flex;align-items:baseline;justify-content:space-between;
+    margin-bottom:18px;padding-bottom:14px;
+    border-bottom:1px solid rgba(93,122,148,.08);
+  }
+  .app-scroll-hd h2{
+    font-family:'Oswald',sans-serif;font-weight:300;font-size:32px;
+    letter-spacing:.08em;color:var(--white);text-transform:uppercase;line-height:1;
+  }
+  .app-scroll-hd h2 strong{font-weight:600;color:var(--stone);}
+  .app-scroll-hd .app-count{
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;
+    color:var(--copper);text-transform:uppercase;
+  }
+  .app-viewport{overflow:hidden;}
+  .app-track{display:flex;gap:6px;will-change:transform;}
+  .app-card{
+    flex:0 0 calc(25% - 4.5px);
+    height:230px;position:relative;overflow:hidden;background:var(--bg2);
+    border-bottom:2px solid rgba(196,98,45,0);
+    transition:border-color .3s;
+  }
+  .app-card:hover{border-bottom-color:var(--copper);}
+  .app-card img{
+    width:100%;height:100%;object-fit:cover;
+    filter:grayscale(68%) contrast(118%) brightness(48%) sepia(16%) hue-rotate(8deg);
+    transition:filter .45s, transform .5s cubic-bezier(.25,.46,.45,.94);
+  }
+  .app-card:hover img{
+    filter:grayscale(10%) contrast(106%) brightness(68%);
+    transform:scale(1.05);
+  }
+  .app-card-lbl{
+    position:absolute;bottom:0;left:0;right:0;
+    padding:40px 14px 12px;
+    background:linear-gradient(transparent,rgba(17,26,36,.86));
+  }
+  .app-card-lbl span{
+    display:block;font-family:'Space Mono',monospace;font-size:9px;
+    letter-spacing:.18em;color:rgba(196,98,45,.55);text-transform:uppercase;margin-bottom:3px;
+    transition:color .3s;
+  }
+  .app-card-lbl strong{
+    font-family:'Oswald',sans-serif;font-weight:400;font-size:15px;
+    letter-spacing:.07em;color:rgba(220,228,236,.5);text-transform:uppercase;
+    transition:color .3s;
+  }
+  .app-card:hover .app-card-lbl span{color:var(--copper);}
+  .app-card:hover .app-card-lbl strong{color:var(--white);}
+  .app-footer{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-top:14px;
+  }
+  .app-dots{display:flex;gap:8px;}
+  .app-dot{
+    width:24px;height:2px;background:rgba(93,122,148,.2);
+    border:none;cursor:pointer;transition:all .25s;padding:0;
+  }
+  .app-dot.on{background:var(--copper);width:38px;}
+  .app-arrows{display:flex;gap:8px;}
+  .app-arrow{
+    font-family:'Space Mono',monospace;font-size:15px;
+    background:none;border:1px solid rgba(93,122,148,.22);
+    color:var(--steel);width:36px;height:28px;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+    transition:all .2s;
+  }
+  .app-arrow:hover{border-color:rgba(196,98,45,.45);color:var(--copper);}
+
+  /* ANIMATIONS */
+  @keyframes rise{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+  .r1{animation:rise .8s ease .1s both;}
+  .r2{animation:rise .8s ease .25s both;}
+  .r3{animation:rise .8s ease .4s both;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html"><img class="nav-logo" src="../Images/Logo/Simple (Star) no bg.png" alt="Liberator Packaging"></a>
+  <ul class="nav-links">
+    <li class="has-dropdown">
+      <a href="#">Capabilities</a>
+      <ul class="nav-dropdown">
+        <li><a href="assembly-kitting.html">Assembly &amp; Kitting</a></li>
+        <li><a href="corrugated-packaging.html">Corrugated Packaging</a></li>
+        <li><a href="foam-cushioning.html">Foam &amp; Cushioning Systems</a></li>
+        <li><a href="wood-crating.html">Wood Crating &amp; Export Containers</a></li>
+        <li><a href="integrated-solutions.html">Engineered Integrated Solutions</a></li>
+      </ul>
+    </li>
+    <li class="has-dropdown">
+      <a href="#">Packaging Applications</a>
+      <ul class="nav-dropdown">
+        <li><a href="drones.html">Drones</a></li>
+        <li><a href="munitions.html">Munitions</a></li>
+        <li><a href="manufactured-parts.html">Manufactured Parts</a></li>
+        <li><a href="electronic-components.html">Electronic Components</a></li>
+      </ul>
+    </li>
+    <li><a href="compliance.html">Compliance</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Contact Us</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag r1">Capability · 05</div>
+    <h1 class="r2">Engineered<em>Integrated Solutions</em></h1>
+    <div class="hero-desc r3">
+      <p>Standard packaging doesn't always cut it. From ESD-safe containers and custom foam inserts to Coroplast&reg; builds and specialty bags, we engineer protective solutions for the products that need more than a box.</p>
+    </div>
+  </div>
+  <div class="hero-image r3">
+    <img src="../Images/integ solutions.png" alt="Engineered Integrated Solutions">
+  </div>
+</section>
+
+<!-- APPLICATIONS SCROLL -->
+<section class="app-scroll-section">
+  <div class="app-scroll-hd">
+    <h2><strong>Applications</strong> &amp; Systems</h2>
+    <span class="app-count">What We Engineer</span>
+  </div>
+  <div class="app-viewport">
+    <div class="app-track" id="appTrack">
+      <div class="app-card"><img src="../Images/EIS Page/WaterTech.png" alt=""><div class="app-card-lbl"><span></span><strong></strong></div></div>
+      <div class="app-card"><img src="../Images/EIS Page/assm & kitting.png" alt=""><div class="app-card-lbl"><span></span><strong></strong></div></div>
+      <div class="app-card"><img src="../Images/EIS Page/BlueESD.png" alt=""><div class="app-card-lbl"><span></span><strong></strong></div></div>
+      <div class="app-card"><img src="../Images/EIS Page/corrfoam.png" alt=""><div class="app-card-lbl"><span></span><strong></strong></div></div>
+      <div class="app-card"><img src="../Images/EIS Page/corr crate.png" alt=""><div class="app-card-lbl"><span></span><strong></strong></div></div>
+      <div class="app-card"><img src="../Images/EIS Page/woodfoam.png" alt=""><div class="app-card-lbl"><span></span><strong></strong></div></div>
+    </div>
+  </div>
+  <div class="app-footer">
+    <div class="app-dots" id="appDots"></div>
+    <div class="app-arrows">
+      <button class="app-arrow" id="appPrev">←</button>
+      <button class="app-arrow" id="appNext">→</button>
+    </div>
+  </div>
+</section>
+
+<!-- SUMMARY -->
+<section class="summary">
+  <div class="summary-inner">
+    <div class="summary-left">
+      <h2>Designed in-house.<br><strong>Built to spec.</strong></h2>
+    </div>
+    <div class="summary-right">
+      <p>When no drawing exists — or when an existing design isn't working — we engineer the solution. Our in-house design team uses SolidWorks and ArtiosCAD to develop packaging from concept through production-ready drawings. We prototype, iterate, validate through testing, and hand off a proven design ready for high-volume production. The entire workflow stays in-house for quality control and speed to market.</p>
+      <div class="summary-pillars">
+        <div class="pillar">
+          <div class="pillar-label">Design</div>
+          <div class="pillar-val">In-House CAD</div>
+          <div class="pillar-desc">CAD and SolidWorks capabilities for corrugated, wood, and foam — concept drawings to production-ready packages.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-label">Engineering</div>
+          <div class="pillar-val">Prototype Fast</div>
+          <div class="pillar-desc">Rapid prototyping from CAD to physical sample, iterated until the design performs — before any production investment.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-label">Execution</div>
+          <div class="pillar-val">Full Production</div>
+          <div class="pillar-desc">Design moves directly into production at scale — no vendor handoffs, no lost context, no quality gaps between engineering and the floor.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS HEADER -->
+<div class="programs-header">
+  <h2>Past Performance <span>&amp; Capabilities</span></h2>
+</div>
+
+<!-- TWO PROGRAMS -->
+<div class="programs">
+
+  <div class="program" id="ground-up-design">
+    <div class="prog-eyebrow"></div>
+    <h2>Drone <span>Pack</span></h2>
+    <div class="prog-ref">Product-Based · Full Engineering Cycle</div>
+    <p>Custom shipping solution designed in-house for an unmanned aerial system, built from customer requirements with no existing drawing. Structural design incorporated corrugated, wood, and foam components engineered around the drone's geometry and transit requirements. Design was validated through a full prototype and test cycle before production.</p>
+    <ul class="spec-list">
+      <li><span class="spec-k">Design Source</span><span class="spec-v">Liberator Engineering · Customer Requirements</span></li>
+      <li><span class="spec-k">Process</span><span class="spec-v">CAD Design → Prototype → Test → Production</span></li>
+      <li><span class="spec-k">Tools</span><span class="spec-v">ArtiosCAD · In-House Testing</span></li>
+      <li><span class="spec-k">Application</span><span class="spec-v">Drone Packaging</span></li>
+      <li><span class="spec-k">Standards</span><span class="spec-v">MIL-STD-2073 · ISTA · ASTM D4169</span></li>
+    </ul>
+  </div>
+
+  <div class="program" id="reverse-engineer">
+    <div class="prog-eyebrow"></div>
+    <h2>Ground-Up <span>Design Program</span></h2>
+    <div class="prog-ref">Requirements-Only · Full Engineering Cycle</div>
+    <p>Complete packaging design from customer-supplied requirements with no existing drawing. We conduct a fragility assessment, propose a structural solution, build and test a prototype, incorporate feedback, and deliver production drawings and a validated pack design ready for volume manufacturing.</p>
+    <ul class="spec-list">
+      <li><span class="spec-k">Design Source</span><span class="spec-v">Liberator Engineering · Customer Requirements</span></li>
+      <li><span class="spec-k">Process</span><span class="spec-v">CAD Design → Prototype → Test → Production</span></li>
+      <li><span class="spec-k">Tools</span><span class="spec-v">ArtiosCAD · Structural CAD · In-House Testing</span></li>
+      <li><span class="spec-k">Deliverable</span><span class="spec-v">Validated Design Package &amp; Production Drawings</span></li>
+      <li><span class="spec-k">Standards</span><span class="spec-v">MIL-STD-2073 · ISTA · ASTM D4169</span></li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- STANDARDS -->
+<div class="standards">
+  <span class="std-label">Standards &amp; Tools</span>
+  <div class="std-list">
+    <span class="std hi">MIL-STD-2073</span>
+    <span class="std hi">ASTM D4169</span>
+    <span class="std hi">ISTA 2A / 3A</span>
+    <span class="std hi">ArtiosCAD</span>
+    <span class="std hi">Structural CAD</span>
+    <span class="std">MIL-HDBK-304</span>
+    <span class="std">CNC Integration</span>
+  </div>
+</div>
+
+<!-- CAPABILITIES -->
+<!-- <section class="capabilities">
+  <div class="cap-header">
+    <h2><strong>Engineering</strong> Capabilities</h2>
+    <span>Types · 04</span>
+  </div>
+  <div class="cap-row">
+    <span class="cap-num">01</span>
+    <span class="cap-name">Ground-Up Package Design</span>
+    <span class="cap-detail">Requirements-Based · CAD to Production · All Material Types</span>
+    <span class="cap-arr">→</span>
+  </div>
+  <div class="cap-row">
+    <span class="cap-num">02</span>
+    <span class="cap-name">Reverse Engineering</span>
+    <span class="cap-detail">Photos / Samples / Hardware · Full Drawing Creation</span>
+    <span class="cap-arr">→</span>
+  </div>
+  <div class="cap-row">
+    <span class="cap-num">03</span>
+    <span class="cap-name">Prototype &amp; Iteration</span>
+    <span class="cap-detail">Rapid Physical Prototyping · Test-Validate-Refine Cycle</span>
+    <span class="cap-arr">→</span>
+  </div>
+  <div class="cap-row">
+    <span class="cap-num">04</span>
+    <span class="cap-name">Production Drawing Packages</span>
+    <span class="cap-detail">Formal Drawings · BOM · Work Instructions · Customer-Owned</span>
+    <span class="cap-arr">→</span>
+  </div>
+</section> -->
+
+<!-- CTA -->
+<section class="cta">
+  <div>
+    <div class="cta-tag">Ready to work</div>
+    <h2>Have a requirement<br>but no drawing?<br><strong>We'll build both.</strong></h2>
+    <p>Start with a spec sheet, a photo, or a conversation — we'll design, prototype, test, and deliver a production-ready packaging solution with drawings you own.</p>
+  </div>
+  <a href="contact.html" class="nav-cta">Contact Us</a>
+</section>
+
+<footer>
+  <span>© 2026 Liberator Packaging LLC · HQ in Richardson, TX</span>
+  <span>Engineered Integrated Solutions</span>
+</footer>
+
+
+<script>
+(function(){
+  var track=document.getElementById('appTrack');
+  var dotsEl=document.getElementById('appDots');
+  var origCards=[].slice.call(track.querySelectorAll('.app-card'));
+  var n=origCards.length;
+  var cur=0,busy=false,timer,tx=0;
+
+  // Clone first 4 for seamless forward loop
+  origCards.slice(0,4).forEach(function(c){track.appendChild(c.cloneNode(true));});
+
+  // Build dots
+  for(var i=0;i<n;i++){
+    var d=document.createElement('button');
+    d.className='app-dot'+(i===0?' on':'');
+    d.setAttribute('aria-label','Item '+(i+1));
+    (function(idx){d.onclick=function(){go(idx);};})(i);
+    dotsEl.appendChild(d);
+  }
+
+  function cardStep(){
+    return track.querySelector('.app-card').offsetWidth+6;
+  }
+
+  function updateDots(idx){
+    dotsEl.querySelectorAll('.app-dot').forEach(function(d,i){
+      d.classList.toggle('on',i===idx%n);
+    });
+  }
+
+  function go(idx){
+    if(busy)return;
+    busy=true;
+    cur=idx;
+    track.style.transition='transform .65s cubic-bezier(.25,.46,.45,.94)';
+    track.style.transform='translateX(-'+(cur*cardStep())+'px)';
+    updateDots(cur);
+    clearInterval(timer);
+  }
+
+  track.addEventListener('transitionend',function(){
+    busy=false;
+    if(cur>=n){
+      track.style.transition='none';
+      cur=0;
+      track.style.transform='translateX(0)';
+      updateDots(0);
+    }
+    reset();
+  });
+
+  function reset(){
+    clearInterval(timer);
+    timer=setInterval(function(){go(cur+1);},3500);
+  }
+
+  document.getElementById('appPrev').onclick=function(){if(cur>0)go(cur-1);};
+  document.getElementById('appNext').onclick=function(){go(cur+1);};
+
+  track.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;},{passive:true});
+  track.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-tx;
+    if(Math.abs(dx)>40){if(dx<0)go(cur+1);else if(cur>0)go(cur-1);}
+  },{passive:true});
+
+  reset();
+})();
+</script>
+</body>
+</html>

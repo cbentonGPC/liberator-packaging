@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us · Liberator Packaging</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Space+Mono:wght@400;700&family=Barlow:ital,wght@0,200;0,300;0,400;1,200;1,300&display=swap');
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --bg:#111a24;--bg2:#172030;
+    --copper:#c4622d;--copper2:#d97840;
+    --stone:#8e8872;--steel:#5d7a94;
+    --white:#dce4ec;--fog:rgba(220,228,236,0.58);
+  }
+  body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-serif;overflow-x:hidden;font-size:18px;}
+
+  /* ── NAV ── */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:200;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:10px 56px;
+    background:#111a24f2;
+    border-bottom:1px solid rgba(93,122,148,0.15);
+    backdrop-filter:blur(10px);
+  }
+  .nav-logo{height:80px;width:auto;display:block;}
+  .nav-links{display:flex;gap:36px;list-style:none;}
+  .nav-links a{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.14em;color:rgba(93,122,148,1.0);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+  .nav-links a:hover{color:var(--white);}
+  .nav-cta{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.12em;color:var(--copper);border:1px solid rgba(196,98,45,.8);padding:11px 24px;text-decoration:none;text-transform:uppercase;transition:all .25s;}
+  .nav-cta:hover{background:rgba(196,98,45,.12);}
+
+  /* ── NAV DROPDOWN ── */
+  .nav-links li{position:relative;}
+  .has-dropdown>a::after{content:' ▾';font-size:10px;opacity:1.0;}
+  .nav-dropdown{
+    display:none;position:absolute;top:100%;left:12px;margin-top:8px;
+    background:rgba(17,26,36,0.97);
+    border:1px solid rgba(93,122,148,.2);border-top:2px solid var(--copper);
+    min-width:210px;list-style:none;backdrop-filter:blur(10px);
+    z-index:300;
+  }
+  .has-dropdown:hover .nav-dropdown{display:block;}
+  .nav-dropdown::before{content:'';position:absolute;top:-8px;left:0;right:0;height:8px;}
+  .nav-dropdown li a{
+    display:block;padding:12px 18px;
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;
+    color:rgba(93,122,148,1.0);text-decoration:none;text-transform:uppercase;
+    border-bottom:1px solid rgba(93,122,148,.1);transition:color .2s,background .2s;
+  }
+  .nav-dropdown li:last-child a{border-bottom:none;}
+  .nav-dropdown li a:hover{color:var(--white);background:rgba(93,122,148,.08);}
+
+  /* ── PAGE HEADER ── */
+  .page-header{
+    padding:160px 56px 80px;
+    background:var(--bg);
+    position:relative;
+    overflow:hidden;
+    border-bottom:1px solid rgba(93,122,148,.12);
+  }
+  .page-header::before{
+    content:'CONTACT';
+    position:absolute;right:20px;top:50%;transform:translateY(-50%);
+    font-family:'Oswald',sans-serif;font-weight:600;font-size:200px;
+    letter-spacing:.08em;color:rgba(93,122,148,.08);
+    white-space:nowrap;pointer-events:none;user-select:none;line-height:1;
+  }
+  .page-header-inner{position:relative;z-index:2;}
+  .section-tag{
+    font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.18em;
+    color:var(--copper);text-transform:uppercase;margin-bottom:24px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .section-tag::before{content:'';width:32px;height:1px;background:var(--copper);}
+  .page-header h1{
+    font-family:'Oswald',sans-serif;font-weight:600;
+    font-size:clamp(52px,7vw,72px);letter-spacing:.06em;
+    line-height:.95;color:var(--stone);text-transform:uppercase;
+    margin-bottom:28px;
+  }
+  .page-header h1 strong{color:var(--white);}
+  .page-header-desc{
+    display:flex;gap:20px;align-items:flex-start;max-width:540px;
+  }
+  .page-header-desc::before{content:'';flex:0 0 3px;height:60px;background:var(--copper);margin-top:4px;}
+  .page-header-desc p{font-size:17px;font-weight:300;line-height:1.8;color:var(--fog);font-style:italic;}
+
+  /* ── CONTACT GRID ── */
+  .contact-grid{
+    display:grid;grid-template-columns:1fr 420px;
+    gap:0;
+    min-height:600px;
+  }
+
+  /* ── FORM PANEL ── */
+  .form-panel{
+    padding:72px 56px 80px;
+    border-right:1px solid rgba(93,122,148,.12);
+  }
+  .form-heading{
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--stone);margin-bottom:48px;
+    display:flex;align-items:center;gap:16px;
+  }
+  .form-heading::after{content:'';flex:1;height:1px;background:rgba(93,122,148,.15);}
+
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;}
+  .form-group{display:flex;flex-direction:column;gap:8px;margin-bottom:24px;}
+  .form-group label{
+    font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--steel);
+  }
+  .form-group label .required{color:var(--copper);margin-left:4px;}
+  .form-group input,
+  .form-group select,
+  .form-group textarea{
+    background:rgba(23,32,48,0.8);
+    border:1px solid rgba(93,122,148,.2);
+    border-top-color:rgba(93,122,148,.35);
+    color:var(--white);
+    font-family:'Barlow',sans-serif;font-size:16px;font-weight:300;
+    padding:14px 18px;
+    outline:none;
+    transition:border-color .2s,background .2s;
+    appearance:none;
+    -webkit-appearance:none;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder{color:rgba(93,122,148,.4);}
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus{
+    border-color:var(--copper);
+    background:rgba(23,32,48,1);
+  }
+  .form-group textarea{resize:vertical;min-height:140px;line-height:1.6;}
+  .select-wrap{position:relative;}
+  .select-wrap::after{
+    content:'▾';
+    position:absolute;right:18px;top:50%;transform:translateY(-50%);
+    color:var(--steel);font-size:12px;pointer-events:none;
+  }
+  .select-wrap select{width:100%;cursor:pointer;}
+  .select-wrap select option{background:#172030;color:var(--white);}
+
+  .form-submit{
+    display:flex;align-items:center;gap:32px;margin-top:40px;
+  }
+  .btn-submit{
+    font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--copper);color:var(--bg);
+    padding:16px 40px;border:none;font-weight:700;
+    cursor:pointer;transition:background .2s;
+    display:inline-block;
+  }
+  .btn-submit:hover{background:var(--copper2);}
+  .form-note{
+    font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em;
+    color:rgba(93,122,148,.85);line-height:1.8;
+  }
+
+  /* ── INFO PANEL ── */
+  .info-panel{
+    padding:72px 48px 80px;
+    background:var(--bg2);
+    display:flex;flex-direction:column;gap:0;
+  }
+  .info-heading{
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--stone);margin-bottom:48px;
+    display:flex;align-items:center;gap:16px;
+  }
+  .info-heading::after{content:'';flex:1;height:1px;background:rgba(93,122,148,.15);}
+
+  .info-block{
+    margin-bottom:40px;
+    padding-bottom:40px;
+    border-bottom:1px solid rgba(93,122,148,.1);
+  }
+  .info-block:last-child{border-bottom:none;margin-bottom:0;}
+  .info-label{
+    font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--copper);margin-bottom:12px;
+  }
+  .info-value{
+    font-family:'Barlow',sans-serif;font-size:17px;font-weight:300;
+    line-height:1.8;color:var(--white);
+  }
+  .info-value a{color:var(--white);text-decoration:none;transition:color .2s;}
+  .info-value a:hover{color:var(--copper2);}
+  .info-sub{
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;
+    color:rgba(93,122,148,.55);margin-top:6px;
+  }
+
+  .coords-block{
+    margin-top:auto;padding-top:40px;
+    border-top:1px solid rgba(93,122,148,.1);
+  }
+  .coords{
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;
+    color:rgba(93,122,148,.35);line-height:2;
+  }
+
+  /* ── RESPONSE PROMISE ── */
+  .response-bar{
+    display:flex;align-items:stretch;
+    border-top:1px solid rgba(93,122,148,.12);
+    border-bottom:1px solid rgba(93,122,148,.12);
+    background:var(--bg2);
+  }
+  .response-item{
+    flex:1;padding:36px 40px;
+    display:flex;align-items:flex-start;gap:20px;
+    border-right:1px solid rgba(93,122,148,.1);
+  }
+  .response-item:last-child{border-right:none;}
+  .response-icon{
+    font-size:28px;margin-top:2px;flex-shrink:0;
+    color:var(--copper);
+  }
+  .response-text{}
+  .response-title{
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--white);margin-bottom:6px;
+  }
+  .response-desc{
+    font-family:'Barlow',sans-serif;font-size:14px;font-weight:300;
+    color:rgba(220,228,236,.5);line-height:1.6;
+  }
+
+  /* ── FOOTER ── */
+  footer{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:28px 56px;
+    border-top:1px solid rgba(93,122,148,.1);
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;
+    color:rgba(93,122,148,.4);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes rise{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:none;}}
+  .r1{animation:rise .9s ease .1s both;}
+  .r2{animation:rise .9s ease .25s both;}
+  .r3{animation:rise .9s ease .4s both;}
+  .r4{animation:rise .9s ease .55s both;}
+  .r5{animation:rise .9s ease .7s both;}
+
+  /* ── SUCCESS STATE ── */
+  .form-success{
+    display:none;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:20px;
+    padding:48px 0;
+  }
+  .form-success.visible{display:flex;}
+  .success-icon{font-size:40px;}
+  .success-heading{
+    font-family:'Oswald',sans-serif;font-weight:500;font-size:32px;
+    letter-spacing:.06em;text-transform:uppercase;color:var(--white);
+  }
+  .success-desc{
+    font-size:16px;font-weight:300;color:var(--fog);line-height:1.8;max-width:400px;
+  }
+  .form-body{transition:opacity .3s;}
+  .form-body.hidden{opacity:0;pointer-events:none;height:0;overflow:hidden;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html"><img class="nav-logo" src="../Images/Logo/Simple (Star) no bg.png" alt="Liberator Packaging"></a>
+  <ul class="nav-links">
+    <li class="has-dropdown">
+      <a href="#">Capabilities</a>
+      <ul class="nav-dropdown">
+        <li><a href="assembly-kitting.html">Assembly & Kitting</a></li>
+        <li><a href="corrugated-packaging.html">Corrugated Packaging</a></li>
+        <li><a href="foam-cushioning.html">Foam & Cushioning Systems</a></li>
+        <li><a href="wood-crating.html">Wood Crating & Export Containers</a></li>
+        <li><a href="integrated-solutions.html">Engineered Integrated Solutions</a></li>
+      </ul>
+    </li>
+    <li class="has-dropdown">
+      <a href="#">Packaging Applications</a>
+      <ul class="nav-dropdown">
+        <li><a href="drones.html">Drones</a></li>
+        <li><a href="munitions.html">Munitions</a></li>
+        <li><a href="manufactured-parts.html">Manufactured Parts</a></li>
+        <li><a href="electronic-components.html">Electronic Components</a></li>
+      </ul>
+    </li>
+    <li><a href="compliance.html">Compliance</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta" style="color:var(--white);border-color:rgba(196,98,45,1);background:rgba(196,98,45,.1);">Contact Us</a>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="section-tag r1">Get in Touch</div>
+    <h1 class="r2">Tell Us What<br><strong>You're Protecting.</strong></h1>
+    <div class="page-header-desc r3">
+      <p>Whether you have a spec in hand or a problem to solve, we're ready to engineer around your program.</p>
+    </div>
+  </div>
+</div>
+
+<!-- RESPONSE PROMISE BAR -->
+<div class="response-bar r4">
+  <div class="response-item">
+    <div class="response-icon">⚡</div>
+    <div class="response-text">
+      <div class="response-title">Same-Day Response</div>
+      <div class="response-desc">All inquiries acknowledged within one business day</div>
+    </div>
+  </div>
+  <div class="response-item">
+    <div class="response-icon">🛡</div>
+    <div class="response-text">
+      <div class="response-title">CMMC Compliant Comms</div>
+      <div class="response-desc">Secure handling for controlled program inquiries</div>
+    </div>
+  </div>
+  <div class="response-item">
+    <div class="response-icon">📐</div>
+    <div class="response-text">
+      <div class="response-title">Bid & Spec Ready</div>
+      <div class="response-desc">We'll quote to your spec or build a custom solution</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT GRID -->
+<div class="contact-grid r5">
+
+  <!-- FORM PANEL -->
+  <div class="form-panel">
+    <div class="form-heading">Submit an Inquiry</div>
+    <script type="text/javascript" src="https://form.jotform.com/jsform/261415384704153"></script>
+  </div>
+
+  <!-- INFO PANEL -->
+  <div class="info-panel">
+    <div class="info-heading">Contact Details</div>
+
+    <div class="info-block">
+      <div class="info-label">Email</div>
+      <div class="info-value">
+        <a href="mailto:cbenton@gpctexas.com">info@liberatorpackaging.com</a>
+      </div>
+    </div>
+
+    <div class="info-block">
+      <div class="info-label">Phone</div>
+      <div class="info-value">
+        <a href="tel:972-999-9999" target="_blank">972-999-9999</a>
+      </div>
+    </div>
+
+    <div class="info-block">
+      <div class="info-label">Hours of Operation</div>
+      <div class="info-value">Mon – Fri<br>8:00 AM – 5:00 PM CT</div>
+    </div>
+
+    <div class="info-block">
+      <div class="info-label">Compliance &amp; Certifications</div>
+      <div class="info-value" style="font-size:14px;line-height:2;">
+        <span style="color:var(--copper);font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;">▸</span> CMMC Level II<br>
+        <span style="color:var(--copper);font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;">▸</span> MIL-SPEC Compliant<br>
+        <span style="color:var(--copper);font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;">▸</span> ISTA Certified Lab<br>
+        <span style="color:var(--copper);font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;">▸</span> ISO 9001 — Planned
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <span>© 2026 Liberator Packaging LLC · HQ in Richardson, TX</span>
+  <span>Aerospace &amp; Defense Packaging Solutions</span>
+</footer>
+
+
+
+</body>
+</html>
