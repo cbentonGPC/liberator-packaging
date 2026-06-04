@@ -50,30 +50,39 @@
   .nav-dropdown li:last-child a{border-bottom:none;}
   .nav-dropdown li a:hover{color:var(--white);background:rgba(93,122,148,.08);}
 
-  /* ── LOGO HERO ── */
-  .about-logo-hero{
-    min-height:62vh;position:relative;overflow:hidden;
+  /* ── HERO COMBINED ── */
+  .hero-combined{
+    display:flex;align-items:center;
     margin-top:100px;
-  }
-  .about-logo-wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
-  .about-logo-img{
-    width:78%; /* ← tweak to resize */
-    height:auto;
-  }
-  .about-logo-overlay{
-    position:absolute;inset:0;
-    background:linear-gradient(to bottom,
-      rgba(17,26,36,0.2) 0%,transparent 25%,transparent 90%,
-      rgba(17,26,36,0.8) 90%,rgba(17,26,36,1) 100%);
+    background:var(--bg);
+    border-bottom:1px solid rgba(93,122,148,.12);
+    overflow:hidden;
   }
 
   /* ── PAGE HERO ── */
   .page-hero{
-    padding:5px 56px 80px;
-    border-bottom:1px solid rgba(93,122,148,.12);
-    background:var(--bg);
+    flex:1;
+    padding:80px 56px;
+    background:transparent;
   }
   .page-hero-inner{max-width:920px;}
+
+  /* ── LOGO HERO ── */
+  .about-logo-hero{
+    flex:0 0 44%;position:relative;overflow:hidden;
+    align-self:stretch;min-height:480px;
+  }
+  .about-logo-wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+  .about-logo-img{
+    width:90%; /* ← tweak to resize */
+    height:auto;
+  }
+  .about-logo-overlay{
+    position:absolute;inset:0;
+    background:
+      linear-gradient(to right,rgba(17,26,36,1) 0%,rgba(17,26,36,0.6) 20%,transparent 55%),
+      linear-gradient(to bottom,rgba(17,26,36,0.4) 0%,transparent 15%,transparent 85%,rgba(17,26,36,0.4) 100%);
+  }
   .page-hero-sub{
     font-family:'Space Mono',monospace;font-size:19px;letter-spacing:.28em;
     color:var(--stone);text-transform:uppercase;margin-bottom:28px;
@@ -285,6 +294,8 @@
 
   /* ── RESPONSIVE ── */
   @media (max-width: 980px){
+    .hero-combined{flex-direction:column;}
+    .about-logo-hero{flex:none;width:100%;min-height:320px;}
     .origin{grid-template-columns:1fr;}
     .origin-text{border-right:none;border-bottom:1px solid rgba(93,122,148,.1);}
     .origin-vis{min-height:320px;}
@@ -328,23 +339,28 @@
   <a href="contact.html" class="nav-cta">Contact Us</a>
 </nav>
 
-<!-- ── LOGO HERO ── -->
-<section class="about-logo-hero">
-  <div class="about-logo-wrap">
-    <img class="about-logo-img" src="../Images/Logo/Liberator Logo.jpg" alt="Liberator Packaging"/>
-    <div class="about-logo-overlay"></div>
-  </div>
-</section>
+<!-- ── HERO COMBINED ── -->
+<div class="hero-combined">
 
-<!-- ── PAGE HERO ── -->
-<section class="page-hero">
-  <div class="page-hero-inner">
-    <div class="page-hero-sub r2">Heritage <span class="dot">·</span> Discipline <span class="dot">·</span> Defense-First</div>
-    <div class="page-hero-lede r3">
-      <p>Liberator Packaging is a defense and aerospace packaging specialist headquartered in Richardson, Texas. We design, manufacture, and test mission-critical protective packaging for prime contractors, primes' tier-one suppliers, and program offices across every branch of service.</p>
+  <!-- ── PAGE HERO ── -->
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-hero-sub r2">Heritage <span class="dot">·</span> Discipline <span class="dot">·</span> Defense-First</div>
+      <div class="page-hero-lede r3">
+        <p>Liberator Packaging is a defense and aerospace packaging specialist headquartered in Richardson, Texas. We design, manufacture, and test mission-critical protective packaging for prime contractors, primes' tier-one suppliers, and program offices across every branch of service.</p>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <!-- ── LOGO HERO ── -->
+  <section class="about-logo-hero">
+    <div class="about-logo-wrap">
+      <img class="about-logo-img" src="../Images/Logo/Liberator Logo.jpg" alt="Liberator Packaging"/>
+      <div class="about-logo-overlay"></div>
+    </div>
+  </section>
+
+</div>
 
 <!-- ── ORIGIN / MISSION ── -->
 <section class="origin">
