@@ -298,7 +298,7 @@
   .pkg-card:hover::after{transform:scaleX(1);}
   .pkg-card:hover{background:rgba(23,32,48,.6);border-color:rgba(93,122,148,.18);}
   .pkg-num{
-    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.18em;
+    font-family:'Space Mono',monospace;font-size:14px;letter-spacing:.18em;
     color:var(--copper);text-transform:uppercase;margin-bottom:20px;opacity:.7;
   }
   .pkg-card h3{
@@ -316,6 +316,17 @@
     color:rgba(93,122,148,.55);border:1px solid rgba(93,122,148,.15);
     padding:4px 10px;text-transform:uppercase;
   }
+  .pkg-set{margin-bottom:24px;}
+  .pkg-set:last-child{margin-bottom:0;}
+  .pkg-set-label{
+    font-family:'Space Mono',monospace;font-size:14px;letter-spacing:.22em;
+    color:var(--white);text-transform:uppercase;
+    display:flex;align-items:center;gap:14px;
+    padding-bottom:12px;margin-bottom:3px;
+    border-bottom:1px solid rgba(93,122,148,.1);
+  }
+  .pkg-set-label::before{content:'';width:24px;height:1px;background:var(--copper);flex-shrink:0;}
+  .pkg-set-cards{display:grid;grid-template-columns:1fr 1fr;gap:3px;}
 
   /* STANDARDS */
   .standards{
@@ -432,42 +443,30 @@
       <div class="pp-eyebrow">Past Performance · Program 01</div>
       <h2>Drone <span>Transit Crate</span></h2>
     </div>
-    <div class="pp-header-right">Commercial Customer</div>
   </div>
 
   <div class="pp-gallery">
 
     <div class="pp-photo" data-caption="Custom foam insert — airframe and payload cavity">
-        <div class="pp-photo-placeholder">
         <img src="../Images/Drone Pack/foam cutting.jpg" alt="foam cutting machine">
-        <div class="ph-icon">📷</div>
         <div class="ph-label">Foam Cutting for Drone Pack<br>Foam Cutting Machine</div>
-      </div>
-      <div class="pp-photo-caption">Foam Cutting Machine</div>
     </div>
 
     <div class="pp-photo pp-photo--tall" data-caption="Completed case system staged for delivery">
       <div class="pp-photo-placeholder">
-        <div class="ph-icon">📷</div>
         <div class="ph-label">Photo Placeholder<br>Completed Case System</div>
       </div>
       <div class="pp-photo-caption">Completed case system staged for delivery</div>
     </div>
 
     <div class="pp-photo" data-caption="Battery compartment — UN 3480 compliant insert">
-      <div class="pp-photo-placeholder">
-        <div class="ph-icon">📷</div>
+        <img src="../Images/Drone Pack/foam cnc.png" alt="foam cutting">
         <div class="ph-label">Photo Placeholder<br>Battery Compartment Insert</div>
-      </div>
-      <div class="pp-photo-caption">Battery compartment — UN 3480 compliant insert</div>
     </div>
 
     <div class="pp-photo" data-caption="Assembly and QC — foam system verification">
-      <div class="pp-photo-placeholder">
-        <div class="ph-icon">📷</div>
+        <img src="../Images/Drone Pack/corr cnc.png" alt="foam cutting">
         <div class="ph-label">Photo Placeholder<br>Assembly &amp; QC</div>
-      </div>
-      <div class="pp-photo-caption">Assembly and QC — foam system verification</div>
     </div>
 
   </div><!-- /pp-gallery -->
@@ -513,94 +512,44 @@
     <div>
       <h2>Drone <span>Packaging Types</span></h2>
     </div>
-    <span class="pkg-header-sub">Types · 04</span>
+    <span class="pkg-header-sub"></span>
   </div>
-  <div class="pkg-grid">
-    <div class="pkg-card">
-      <div class="pkg-num">01</div>
-      <h3>Field &amp; Transit Cases</h3>
-      <p>Reusable cases built for operational tempo — latching lids, custom foam inserts, and compartments for airframe, GCS, batteries, and accessories. Designed to survive field handling and repeated use.</p>
-      <div class="pkg-tags">
-        <span class="pkg-tag">CNC Foam</span>
-        <span class="pkg-tag">Reusable</span>
-        <span class="pkg-tag">Latching Closure</span>
-        <span class="pkg-tag">Accessory Layout</span>
-      </div>
-    </div>
-    <div class="pkg-card">
-      <div class="pkg-num">02</div>
-      <h3>Shipping Outers</h3>
-      <p>Corrugated or wood outer containers engineered to ASTM D4169 drop performance standards for single or multi-unit shipment. Sized to nest with the field case or foam-only interior configurations.</p>
-      <div class="pkg-tags">
-        <span class="pkg-tag">ASTM D4169</span>
-        <span class="pkg-tag">Corrugated</span>
-        <span class="pkg-tag">Wood Crate</span>
-        <span class="pkg-tag">Multi-Unit</span>
-      </div>
-    </div>
-    <div class="pkg-card">
-      <div class="pkg-num">03</div>
-      <h3>Battery Packaging</h3>
-      <p>Dedicated inserts and containers meeting UN 3480 and UN 3481 requirements for lithium battery transport. Designed to isolate cells, prevent thermal event propagation, and satisfy DOT and IATA shipment rules.</p>
-      <div class="pkg-tags">
-        <span class="pkg-tag">UN 3480</span>
-        <span class="pkg-tag">UN 3481</span>
-        <span class="pkg-tag">DOT Compliant</span>
-        <span class="pkg-tag">IATA</span>
-      </div>
-    </div>
-    <div class="pkg-card">
-      <div class="pkg-num">04</div>
-      <h3>Large-Format UAS Crating</h3>
-      <p>Custom wood crates and skidded containers for MALE and HALE class platforms, long-endurance ISR drones, and large multi-rotor systems. Engineered for domestic transport or export under ISPM-15.</p>
-      <div class="pkg-tags">
-        <span class="pkg-tag">Wood Crate</span>
-        <span class="pkg-tag">ISPM-15</span>
-        <span class="pkg-tag">Skidded</span>
-        <span class="pkg-tag">Export Ready</span>
-      </div>
-    </div>
-    <div class="pkg-card">
-      <div class="pkg-num">05</div>
-      <h3>ESD-Safe Inserts</h3>
-      <p>Conductive and dissipative foam systems for ESD-sensitive payloads, sensor packages, and avionics. Material selected to ANSI/ESD S20.20 where required — critical for ISR and electronic warfare payloads.</p>
-      <div class="pkg-tags">
-        <span class="pkg-tag">ESD Safe</span>
-        <span class="pkg-tag">Conductive Foam</span>
-        <span class="pkg-tag">ANSI/ESD S20.20</span>
-        <span class="pkg-tag">Payload</span>
-      </div>
-    </div>
-    <div class="pkg-card">
-      <div class="pkg-num">06</div>
-      <h3>Engineered Solutions</h3>
-      <p>No drawing? No standard fit? We reverse-engineer from the hardware itself or design from a specification. New platforms, rapid fielding timelines, and atypical geometries are our normal — not exceptions.</p>
-      <div class="pkg-tags">
-        <span class="pkg-tag">Reverse-Engineered</span>
-        <span class="pkg-tag">Design from Spec</span>
-        <span class="pkg-tag">New Platforms</span>
-        <span class="pkg-tag">Rapid Delivery</span>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- STANDARDS -->
-<div class="standards">
-  <span class="std-label">Standards</span>
-  <div class="std-list">
-    <span class="std hi">MIL-STD-2073</span>
-    <span class="std hi">ASTM D4169</span>
-    <span class="std hi">ASTM D6199</span>
-    <span class="std hi">ISTA 2A</span>
-    <span class="std hi">UN 3480</span>
-    <span class="std hi">UN 3481</span>
-    <span class="std hi">ANSI/ESD S20.20</span>
-    <span class="std hi">MIL-PRF-81705</span>
-    <span class="std hi">ISPM-15</span>
-    <span class="std hi">IATA DGR</span>
+  <!-- Markets -->
+  <div class="pkg-set">
+    <div class="pkg-set-label">Markets</div>
+    <div class="pkg-set-cards">
+      <div class="pkg-card">
+        <div class="pkg-num">01</div>
+        <h3>Commercial</h3>
+        <p>Packaging for commercial UAS operations — inspection, mapping, survey, and other platforms. We build to your hardware and meet transport requirements, with reusable field cases designed for day-to-day operational tempo.</p>
+      </div>
+      <div class="pkg-card">
+        <div class="pkg-num">02</div>
+        <h3>Military</h3>
+        <p>Packaging for sUAS, ISR, tactical, and other platforms. Engineered to MIL-STD-2073, with ESD-protected foam systems, sealed construction, and export-ready crating for programs operating across domestic and theater environments.</p>
+      </div>
+    </div>
   </div>
-</div>
+
+  <!-- Style -->
+  <div class="pkg-set">
+    <div class="pkg-set-label">Style</div>
+    <div class="pkg-set-cards">
+      <div class="pkg-card">
+        <div class="pkg-num">01</div>
+        <h3>Single Drone</h3>
+        <p>Individual transit and field cases built around one airframe. CNC-cut foam inserts hold the drone, GCS, batteries, and accessories in fixed positions — designed for rapid open-and-close access and guaranteed protection.</p>
+      </div>
+      <div class="pkg-card">
+        <div class="pkg-num">02</div>
+        <h3>Multi-Drone</h3>
+        <p>Multi-unit shipping and deployment containers for fleet-scale operations. Corrugated or wood crated outers for multiple units per shipment — sized for pallet efficiency, cost-optimized foam layouts, and scaled to program volume.</p>
+      </div>
+    </div>
+  </div>
+
+</section>
 
 <!-- CTA -->
 <section class="cta">
