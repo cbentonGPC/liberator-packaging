@@ -52,7 +52,7 @@
 
   /* ── PAGE HERO ── */
   .page-hero{
-    padding:160px 56px 80px;
+    padding:140px 100px 40px 56px;
     border-bottom:1px solid rgba(93,122,148,.12);
     position:relative;overflow:hidden;
   }
@@ -67,7 +67,14 @@
     content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
     background-image:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(17,26,36,0.06) 2px,rgba(17,26,36,0.06) 4px);
   }
-  .page-hero-inner{position:relative;z-index:2;max-width:920px;}
+  .page-hero-inner{
+    position:relative;z-index:2;
+    display:grid;grid-template-columns:1fr minmax(0,45%);
+    align-items:stretch;gap:56px;width:100%;
+  }
+  .page-hero-text{
+    display:flex;flex-direction:column;justify-content:flex-end;
+  }
   .page-hero-tag{
     font-family:'Space Mono',monospace;font-size:15px;letter-spacing:.18em;
     color:var(--copper);text-transform:uppercase;margin-bottom:32px;
@@ -76,19 +83,37 @@
   .page-hero-tag::before{content:'';width:32px;height:1px;background:var(--copper);}
   .page-hero h1{
     font-family:'Oswald',sans-serif;font-weight:600;
-    font-size:clamp(64px,9vw,112px);letter-spacing:.05em;
+    font-size:clamp(52px,7vw,96px);letter-spacing:.05em;
     line-height:.9;color:var(--stone);text-transform:uppercase;
-    margin-bottom:36px;
+    margin-bottom:28px;
   }
   .page-hero h1 .sub{
     font-weight:300;font-size:.30em;letter-spacing:.26em;
     color:rgba(142,136,114,.45);display:block;margin-top:18px;
   }
   .page-hero-lede{
-    display:flex;gap:20px;align-items:flex-start;max-width:680px;margin-top:32px;
+    display:flex;gap:20px;align-items:flex-start;margin-top:24px;
   }
-  .page-hero-lede::before{content:'';flex:0 0 3px;height:103px;background:var(--copper);margin-top:4px;}
-  .page-hero-lede p{font-size:19px;font-weight:300;line-height:1.85;color:var(--fog);font-style:italic;}
+  .page-hero-lede::before{content:'';flex:0 0 3px;height:24px;background:var(--copper);margin-top:4px;}
+  .page-hero-lede p{font-size:17px;font-weight:300;line-height:1.75;color:var(--fog);font-style:italic;}
+  .page-hero-photo{
+    position:relative;min-height:480px;
+  }
+  .page-hero-photo img{
+    width:100%;height:100%;object-fit:cover;object-position:center; padding:0 0 0 0;
+    display:block;
+    filter:saturate(0.85) contrast(1.05);
+    -webkit-mask-image:linear-gradient(to right, transparent, black 18%, black 82%, transparent),
+                       linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+    -webkit-mask-composite:destination-in;
+    mask-image:linear-gradient(to right, transparent, black 18%, black 82%, transparent),
+               linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+  }
+  @media (max-width:1100px){
+    .page-hero{padding:140px 56px 80px;}
+    .page-hero-inner{grid-template-columns:1fr;gap:40px;}
+    .page-hero-photo{display:none;}
+  }
 
   /* ── QUICK FACTS STRIP ── */
   .facts{
@@ -287,10 +312,16 @@
 <!-- ── PAGE HERO ── -->
 <section class="page-hero">
   <div class="page-hero-inner">
-    <div class="page-hero-tag r1">Compliance · Certifications · Standards</div>
-    <h1 class="r2">Audited. Certified.<br>Built To Spec.<span class="sub"> CMMC · ISO · ITAR · DFARS · MIL-STD</span></h1>
-    <div class="page-hero-lede r3">
-      <p>Every program we touch is built against a defined standard, documented in a verifiable record, and traceable from raw material through final shipment. This page is the single source of truth for our compliance posture.</p>
+    <div class="page-hero-text">
+      <div class="page-hero-tag r1">Compliance · Certifications · Standards</div>
+      <!-- <h1 class="r2">Compliance<br>& Security<br>Focused<span class="sub">CMMC · ISO · ITAR · ISPM</span></h1> -->
+      <h1 class="r2">CMMC · ITAR · ISO<span class="sub">CMMC · ISO · ITAR · ISPM</span></h1>
+      <div class="page-hero-lede r3">
+        <p>Every program is built against a defined standard and traceable from raw material through final shipment.</p>
+      </div>
+    </div>
+    <div class="page-hero-photo r3">
+      <img src="../Images/compliance.png" alt="Compliance documentation">
     </div>
   </div>
 </section>
@@ -335,11 +366,11 @@
         <div class="cert-status">Certified</div>
       </div>
       <div class="cert-desc">Cybersecurity Maturity Model Certification at Level 2 — the standard required for handling Controlled Unclassified Information (CUI) on DoD contracts. Self-assessed after going through the easyCMMC program with CloudFit.</div>
-<!--       <div class="cert-meta">
+      <div class="cert-meta">
         <div class="meta-row"><span>Assessor</span><span>Self-Assessed</span></div>
         <div class="meta-row"><span>Cert ID</span><span>#xxxxxx</span></div>
         <div class="meta-row"><span>Valid Through</span><span>xx/xx/xxxx</span></div>
-      </div> -->
+      </div>
     </div>
 
     <div class="cert-card">
@@ -348,11 +379,11 @@
         <div class="cert-status">In Process</div>
       </div>
       <div class="cert-desc">Quality Management System certified to ISO 9001:2015. Covers design, production, testing, and delivery of protective packaging and crating across all GPC operations. Audited annually by an accredited registrar.</div>
-<!--       <div class="cert-meta">
+      <div class="cert-meta">
         <div class="meta-row"><span>Registrar</span><span>[TKTK]</span></div>
         <div class="meta-row"><span>Cert No.</span><span>#xxxxxx</span></div>
         <div class="meta-row"><span>Valid Through</span><span>xx/xx/xxxx</span></div>
-      </div> -->
+      </div>
     </div>
 
     <div class="cert-card">
@@ -361,11 +392,11 @@
         <div class="cert-status">Certified</div>
       </div>
       <div class="cert-desc">In-house International Safe Transit Association certified test laboratory. Drop, vibration, compression, and environmental conditioning equipment on site, with test protocols aligned to ISTA Series 1, 2, 3, and 6 procedures.</div>
-<!--       <div class="cert-meta">
+      <div class="cert-meta">
         <div class="meta-row"><span>Lab Member ID</span><span>4615</span></div>
         <div class="meta-row"><span>Protocols</span><span>ISTA 1A</span></div>
         <div class="meta-row"><span>Valid Through</span><span>08/01/2026</span></div>
-      </div> -->
+      </div>
     </div>
 
     <div class="cert-card">
@@ -374,11 +405,11 @@
         <div class="cert-status">Certified</div>
       </div>
       <div class="cert-desc">Authorized to heat-treat and stamp wood packaging material under ISPM-15, the international phytosanitary standard required for export crates and pallets. Certified through the American Lumber Standard Committee (ALSC) program.</div>
-<!--       <div class="cert-meta">
+      <div class="cert-meta">
         <div class="meta-row"><span>Stamp ID</span><span>[TKTK]</span></div>
         <div class="meta-row"><span>Treatment</span><span>Heat Treatment (HT)</span></div>
         <div class="meta-row"><span>Inspecting Agency</span><span>[TKTK]</span></div>
-      </div> -->
+      </div>
     </div>
 
   </div>
@@ -454,14 +485,14 @@
 <!-- ── CTA ── -->
 <section class="cta">
   <div class="cta-plane-wrap">
-    <img class="cta-plane-img" src="../Images/155mm storage.png" alt="155mm Storage"/>
+    <img class="cta-plane-img" src="../Images/pexels-lio-voo-262755153-12748681.jpg" alt="B-24 Liberator"/>
     <div class="cta-overlay"></div>
   </div>
   <div class="cta-content">
     <div class="cta-tag">Vendor Qualification</div>
     <h2>Need our<br><strong>compliance packet?</strong></h2>
     <p>Contact our compliance team for the full supplier qualification packet, certificate copies, or program-specific documentation.</p>
-    <a href="contact.html" class="nav-cta">Contact Compliance</a>
+    <a href="contact.html" class="nav-cta">Contact Us</a>
   </div>
 </section>
 
