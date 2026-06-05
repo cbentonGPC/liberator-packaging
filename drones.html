@@ -214,7 +214,7 @@
     border:1px solid rgba(93,122,148,.1);
   }
   .pp-details-left{
-    padding:44px 48px;
+    padding:44px 48px 0 44px;
     background:var(--bg2);
     border-right:1px solid rgba(93,122,148,.1);
   }
@@ -227,28 +227,18 @@
     font-size:15px;font-weight:300;line-height:1.9;color:var(--fog);
     margin-bottom:32px;
   }
-  .pp-metrics{
-    display:grid;grid-template-columns:1fr 1fr;gap:1px;
-    border:1px solid rgba(93,122,148,.1);
+  .pp-ca{display:flex;flex-direction:column;}
+  .pp-ca-item{padding:2px 0;border-top:1px solid rgba(93,122,148,.1);}
+  .pp-ca-item:last-child{border-bottom:1px solid rgba(93,122,148,.1);}
+  .pp-ca-label{
+    font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.22em;
+    color:var(--copper);text-transform:uppercase;margin-bottom:10px;
+    display:flex;align-items:center;gap:12px;
   }
-  .pp-metric{
-    padding:20px 22px;background:var(--bg);
-    border-right:1px solid rgba(93,122,148,.07);
-    border-bottom:1px solid rgba(93,122,148,.07);
-  }
-  .pp-metric:first-child{grid-column:1/-1;border-right:none;text-align:center;}
-  .pp-metric:last-child{border-right:none;border-bottom:none;text-align:center;}
-  .pp-metric:nth-last-child(2){border-bottom:none;text-align:center;}
-  .metric-val{
-    font-family:'Oswald',sans-serif;font-weight:600;font-size:32px;
-    letter-spacing:.04em;color:var(--copper);line-height:1;margin-bottom:6px;
-  }
-  .metric-label{
-    font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.16em;
-    color:rgba(142,136,114,.8);text-transform:uppercase;
-  }
+  .pp-ca-label::before{content:'';width:18px;height:1px;background:var(--copper);flex-shrink:0;}
+  .pp-ca-text{font-size:15px;font-weight:300;line-height:1.9;color:var(--fog);}
   .pp-details-right{
-    padding:44px 48px;
+    padding:44px 48px 15px 44px;
     background:var(--bg);
   }
   .pp-details-right h3{
@@ -474,19 +464,14 @@
   <div class="pp-details">
     <div class="pp-details-left">
       <h3>Program Overview</h3>
-      <p>Custom crate and foam systems for a small UAS platform deployed by a commercial customer. The scope included precision-cut foam inserts for the airframe and parts and a wood crate for added protection. All systems were designed for repeated field use with foam geometry toleranced for quick open-and-close access under operational conditions.</p>
-      <div class="pp-metrics">
-        <div class="pp-metric">
-          <div class="metric-val">3</div>
-          <div class="metric-label">Platform Configurations</div>
+      <div class="pp-ca">
+        <div class="pp-ca-item">
+          <div class="pp-ca-label">Challenge</div>
+          <p class="pp-ca-text">Protect a fragile composite airframe and sensitive payload electronics — while keeping the package fast to open and close under operational conditions.</p>
         </div>
-        <div class="pp-metric">
-          <div class="metric-val">100%</div>
-          <div class="metric-label">Compliant</div>
-        </div>
-        <div class="pp-metric">
-          <div class="metric-val">0</div>
-          <div class="metric-label">Transit Damage Claims</div>
+        <div class="pp-ca-item">
+          <div class="pp-ca-label">Approach</div>
+          <p class="pp-ca-text">Die-cut polyethylene foam inserts toleranced to the airframe geometry, a V11C corrugated crate outer for structural protection, and a dedicated battery compartment meeting DOT and IATA requirements. Closure system designed for repeated field use without tools or special handling.</p>
         </div>
       </div>
     </div>
@@ -494,12 +479,11 @@
       <h3>Program Specifications</h3>
       <ul class="spec-list">
         <li><span class="spec-k">Platform</span><span class="spec-v">Small UAS · Multi-Rotor</span></li>
-        <li><span class="spec-k">Package Types</span><span class="spec-v">Field Case, Transit Case, Shipping Outer</span></li>
-        <li><span class="spec-k">Foam System</span><span class="spec-v">CNC-Cut Polyethylene · Airframe, GCS &amp; Accessories</span></li>
-        <li><span class="spec-k">Outer Container</span><span class="spec-v">275 lb ECT Corrugated · Double-Wall</span></li>
-        <li><span class="spec-k">Testing Standard</span><span class="spec-v">ASTM D4169 · Assurance Level II</span></li>
+        <li><span class="spec-k">Package Types</span><span class="spec-v">Field, Transit, or Shipping Pack</span></li>
+        <li><span class="spec-k">Foam System</span><span class="spec-v">Anti-Static Polyethylene</span></li>
+        <li><span class="spec-k">Outer Container</span><span class="spec-v">V11C Double-Wall Corrugated · Custom 4-Way Pallet</span></li>
+        <!-- <li><span class="spec-k">Standards</span><span class="spec-v">ASTM D4169 · MIL-PRF-81705 · ASTM D3575 · ASTM D5118</span></li> -->
         <li><span class="spec-k">Design Source</span><span class="spec-v">Reverse-Engineered from Hardware</span></li>
-        <li><span class="spec-k">Closure</span><span class="spec-v">Latching Crate (Klimps) · Reusable Design</span></li>
       </ul>
     </div>
   </div>
@@ -527,7 +511,7 @@
       <div class="pkg-card">
         <div class="pkg-num">02</div>
         <h3>Military</h3>
-        <p>Packaging for sUAS, ISR, tactical, and other platforms. Engineered to MIL-STD-2073, with ESD-protected foam systems, sealed construction, and export-ready crating for programs operating across domestic and theater environments.</p>
+        <p>Packaging for UAS, ISR, tactical, and other platforms. Engineered to MIL-STD-2073, with ESD-protected foam systems, sealed construction, and export-ready crating for programs operating across domestic and theater environments.</p>
       </div>
     </div>
   </div>
