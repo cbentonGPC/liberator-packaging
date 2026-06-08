@@ -150,7 +150,7 @@
   /* PHOTO GRID */
   .pp-gallery{
     display:grid;
-    grid-template-columns:1fr 1fr 1fr;
+    grid-template-columns:1.5fr 1fr;
     grid-template-rows:280px 280px;
     gap:3px;
     margin-bottom:56px;
@@ -164,9 +164,9 @@
     grid-column:1 / 3;
     grid-row:1 / 2;
   }
-  /* Last placeholder spans both rows in column 3 */
+  /* Last placeholder spans both rows on the left */
   .pp-photo--tall{
-    grid-column:3 / 4;
+    grid-column:1 / 2;
     grid-row:1 / 3;
   }
   .pp-photo img{
@@ -438,11 +438,6 @@
 
   <!-- PHOTO GRID: 1 large left + 2 right stacked on row 1 | 3 equal on row 2 -->
   <div class="pp-gallery">
-
-    <div class="pp-photo" data-caption="Full Assembly Line — HIMARS missile crates station">
-      <img src="../Images/Missle Crates/assembly line photo2.png" alt="Assembly line production of HIMARS missile crates">
-      <div class="pp-photo-caption">Full Assembly Line — HIMARS missile crates station</div>
-    </div>
 
     <div class="pp-photo pp-photo--tall" data-caption="Completed POP crates staged for shipment">
       <img src="../Images/Missle Crates/POP Crates w bg.png" alt="Assembly line production of HIMARS missile crates">
