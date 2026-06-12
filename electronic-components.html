@@ -51,6 +51,20 @@
   .hero{
     padding:140px 56px 72px;
     border-bottom:1px solid rgba(93,122,148,.1);
+    display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;
+  }
+  .hero-image{
+    display:flex;align-items:center;justify-content:center;
+  }
+  .hero-image img{
+    width:100%;max-width:600px;height:auto;display:block;
+    filter:saturate(0.75) brightness(0.85);
+    -webkit-mask-image:linear-gradient(to right, transparent, black 10%, black 99%, transparent),
+                       linear-gradient(to bottom, transparent, black 8%, black 92%, transparent);
+    -webkit-mask-composite:destination-in;
+    mask-image:linear-gradient(to right, transparent, black 10%, black 90%, transparent),
+               linear-gradient(to bottom, transparent, black 8%, black 92%, transparent);
+    mask-composite:intersect;
   }
   .hero-tag{
     font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.2em;
@@ -370,10 +384,15 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-tag r1">Application · 04</div>
-  <h1 class="r2">Electronic<br>Components<em> Packaging</em></h1>
-  <div class="hero-desc r3">
-    <p>From individual circuit boards and sensors to complete sensitive electronic machines — we engineer ESD-safe packaging systems that protect the product and its components against electrostatic discharge, shock, and environmental exposure.</p>
+  <div class="hero-content">
+    <div class="hero-tag r1">Application · 04</div>
+    <h1 class="r2">Electronic<br>Components<em> Packaging</em></h1>
+    <div class="hero-desc r3">
+      <p>From individual circuit boards and sensors to complete sensitive electronic machines — we engineer ESD-safe packaging systems that protect the product and its components against electrostatic discharge, shock, and environmental exposure.</p>
+    </div>
+  </div>
+  <div class="hero-image r3">
+    <img src="../Images/Corr Page/slide pack.png" alt="Electronic Components Packaging">
   </div>
 </section>
 
