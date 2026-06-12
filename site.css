@@ -146,6 +146,10 @@ footer span{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12
   nav{padding:10px 32px;}
   footer{padding:24px 32px;}
 
+  .hero{flex-direction:column !important;padding:110px 32px 40px !important;}
+  .hero *{min-width:0 !important;}
+  .hero-image{display:none;}
+
   /* programs */
   .programs-header{padding:48px 32px 0;}
   .programs-header h2{font-size:32px;}
@@ -169,6 +173,10 @@ footer span{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12
   nav{padding:10px 20px;}
   .nav-logo{height:48px;}
   .nav-toggle{display:flex;}
+
+  .hero{flex-direction:column !important;padding:110px 32px 40px !important;}
+  .hero *{min-width:0 !important;}
+  .hero-image{display:none;}
 
   /* desktop links → slide-down panel */
   /* position:absolute rather than fixed because backdrop-filter on nav
