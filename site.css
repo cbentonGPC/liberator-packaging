@@ -150,6 +150,10 @@ footer span{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12
   .hero *{min-width:0 !important;}
   .hero-image{display:none;}
 
+  .summary{grid-template-columns:1fr !important;}
+  .summary-img-col{display:none;}
+  .summary-text-col{border-left:none !important;padding:40px 24px !important;}
+
   /* programs */
   .programs-header{padding:48px 32px 0;}
   .programs-header h2{font-size:32px;}
@@ -172,6 +176,10 @@ footer span{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12
   .hero{flex-direction:column !important;padding:110px 32px 40px !important;}
   .hero *{min-width:0 !important;}
   .hero-image{display:none;}
+
+  .summary{grid-template-columns:1fr !important;}
+  .summary-img-col{display:none;}
+  .summary-text-col{border-left:none !important;padding:40px 24px !important;}
 
   /* ── MOBILE NAV ── */
   nav{padding:10px 20px;}
