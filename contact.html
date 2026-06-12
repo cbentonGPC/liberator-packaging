@@ -1,59 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact Us · Liberator Packaging</title>
+<link rel="stylesheet" href="site.css">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Space+Mono:wght@400;700&family=Barlow:ital,wght@0,200;0,300;0,400;1,200;1,300&display=swap');
-
-  *{margin:0;padding:0;box-sizing:border-box;}
-  :root{
-    --bg:#111a24;--bg2:#172030;
-    --copper:#c4622d;--copper2:#d97840;
-    --stone:#8e8872;--steel:#5d7a94;
-    --white:#dce4ec;--fog:rgba(220,228,236,0.58);
-  }
-  body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-serif;overflow-x:hidden;font-size:18px;}
-
-  /* ── NAV ── */
-  nav{
-    position:fixed;top:0;left:0;right:0;z-index:200;
-    display:flex;align-items:center;justify-content:space-between;
-    padding:10px 56px;
-    background:#111a24f2;
-    border-bottom:1px solid rgba(93,122,148,0.15);
-    backdrop-filter:blur(10px);
-  }
-  .nav-logo{height:80px;width:auto;display:block;}
-  .nav-links{display:flex;gap:36px;list-style:none;}
-  .nav-links a{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.14em;color:rgba(93,122,148,1.0);text-decoration:none;text-transform:uppercase;transition:color .2s;}
-  .nav-links a:hover{color:var(--white);}
-  .nav-cta{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.12em;color:var(--copper);border:1px solid rgba(196,98,45,.8);padding:11px 24px;text-decoration:none;text-transform:uppercase;transition:all .25s;}
-  .nav-cta:hover{background:rgba(196,98,45,.12);}
-
-  /* ── NAV DROPDOWN ── */
-  .nav-links li{position:relative;}
-  .has-dropdown>a::after{content:' ▾';font-size:10px;opacity:1.0;}
-  .nav-dropdown{
-    display:none;position:absolute;top:100%;left:12px;margin-top:8px;
-    background:rgba(17,26,36,0.97);
-    border:1px solid rgba(93,122,148,.2);border-top:2px solid var(--copper);
-    min-width:210px;list-style:none;backdrop-filter:blur(10px);
-    z-index:300;
-  }
-  .has-dropdown:hover .nav-dropdown{display:block;}
-  .nav-dropdown::before{content:'';position:absolute;top:-8px;left:0;right:0;height:8px;}
-  .nav-dropdown li a{
-    display:block;padding:12px 18px;
-    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;
-    color:rgba(93,122,148,1.0);text-decoration:none;text-transform:uppercase;
-    border-bottom:1px solid rgba(93,122,148,.1);transition:color .2s,background .2s;
-  }
-  .nav-dropdown li:last-child a{border-bottom:none;}
-  .nav-dropdown li a:hover{color:var(--white);background:rgba(93,122,148,.08);}
-
-  /* ── PAGE HEADER ── */
+/* ── PAGE HEADER ── */
   .page-header{
     padding:160px 56px 80px;
     background:var(--bg);
@@ -230,25 +183,10 @@
     font-family:'Barlow',sans-serif;font-size:14px;font-weight:300;
     color:rgba(220,228,236,.5);line-height:1.6;
   }
+/* ── ANIMATIONS ── */
+to{opacity:1;transform:none;}}
 
-  /* ── FOOTER ── */
-  footer{
-    display:flex;justify-content:space-between;align-items:center;
-    padding:28px 56px;
-    border-top:1px solid rgba(93,122,148,.1);
-    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;
-    color:rgba(93,122,148,.4);
-  }
-
-  /* ── ANIMATIONS ── */
-  @keyframes rise{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:none;}}
-  .r1{animation:rise .9s ease .1s both;}
-  .r2{animation:rise .9s ease .25s both;}
-  .r3{animation:rise .9s ease .4s both;}
-  .r4{animation:rise .9s ease .55s both;}
-  .r5{animation:rise .9s ease .7s both;}
-
-  /* ── SUCCESS STATE ── */
+/* ── SUCCESS STATE ── */
   .form-success{
     display:none;
     flex-direction:column;
@@ -265,14 +203,32 @@
   .success-desc{
     font-size:16px;font-weight:300;color:var(--fog);line-height:1.8;max-width:400px;
   }
-  .form-body{transition:opacity .3s;}
-  .form-body.hidden{opacity:0;pointer-events:none;height:0;overflow:hidden;}
+  .form-
+.form-body.hidden{opacity:0;pointer-events:none;height:0;overflow:hidden;}
+
+  @media(max-width:1024px){
+    .contact-grid{grid-template-columns:1fr;}
+    .form-panel{border-right:none;border-bottom:1px solid rgba(93,122,148,.12);}
+    .info-panel{padding:48px 56px;}
+  }
+  @media(max-width:768px){
+    .page-header{padding:120px 20px 48px;}
+    .page-header h1{font-size:clamp(40px,11vw,64px);}
+    .contact-grid{grid-template-columns:1fr;}
+    .form-panel{padding:40px 20px 56px;border-right:none;}
+    .info-panel{padding:40px 20px;}
+    .response-bar{flex-direction:column;}
+    .response-item{border-right:none;border-bottom:1px solid rgba(93,122,148,.1);padding:24px 20px;}
+    .form-row{grid-template-columns:1fr;}
+    .form-submit{flex-direction:column;gap:20px;}
+  }
 </style>
 </head>
 <body>
 
 <nav>
   <a href="index.html"><img class="nav-logo" src="../Images/Logo/Simple (Star) no bg.png" alt="Liberator Packaging"></a>
+  <button class="nav-toggle" aria-label="Open navigation" aria-expanded="false"><span></span><span></span><span></span></button>
   <ul class="nav-links">
     <li class="has-dropdown">
       <a href="#">Capabilities</a>
@@ -295,6 +251,7 @@
     </li>
     <li><a href="compliance.html">Compliance</a></li>
     <li><a href="about.html">About</a></li>
+    <a href="contact.html" class="nav-mobile-cta">Contact Us</a>
   </ul>
   <a href="contact.html" class="nav-cta" style="color:var(--white);border-color:rgba(196,98,45,1);background:rgba(196,98,45,.1);">Contact Us</a>
 </nav>
@@ -387,5 +344,6 @@
 
 
 
+<script src="site.js" defer></script>
 </body>
 </html>

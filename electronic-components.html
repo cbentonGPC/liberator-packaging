@@ -1,53 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Electronic Components Packaging · Liberator Packaging</title>
+<link rel="stylesheet" href="site.css">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Space+Mono:wght@400;700&family=Barlow:ital,wght@0,200;0,300;0,400;1,200;1,300&display=swap');
-
-  *{margin:0;padding:0;box-sizing:border-box;}
-  :root{
-    --bg:#111a24;--bg2:#172030;
-    --copper:#c4622d;--copper2:#d97840;
-    --stone:#8e8872;--steel:#5d7a94;
-    --white:#dce4ec;--fog:rgba(220,228,236,0.58);
-  }
-  body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-serif;overflow-x:hidden;font-size:18px;}
-
-  /* NAV */
-  nav{
-    position:fixed;top:0;left:0;right:0;z-index:200;
-    display:flex;align-items:center;justify-content:space-between;
-    padding:22px 56px;
-    background:#111a24f2;
-    border-bottom:1px solid rgba(93,122,148,0.15);
-    backdrop-filter:blur(10px);
-  }
-  .nav-logo{height:60px;width:auto;display:block;}
-  .nav-links{display:flex;gap:36px;list-style:none;}
-  .nav-links a{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.14em;color:rgba(93,122,148,.8);text-decoration:none;text-transform:uppercase;transition:color .2s;}
-  .nav-links a:hover{color:var(--white);}
-  .nav-cta{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.12em;color:var(--copper);border:1px solid rgba(196,98,45,.5);padding:11px 24px;text-decoration:none;text-transform:uppercase;transition:all .25s;}
-  .nav-cta:hover{background:rgba(196,98,45,.12);}
-  .nav-links li{position:relative;}
-  .has-dropdown>a::after{content:' ▾';font-size:10px;opacity:.6;}
-  .nav-dropdown{
-    display:none;position:absolute;top:100%;left:12px;margin-top:8px;
-    background:rgba(17,26,36,0.97);
-    border:1px solid rgba(93,122,148,.2);border-top:2px solid var(--copper);
-    min-width:210px;list-style:none;backdrop-filter:blur(10px);z-index:300;
-  }
-  .has-dropdown:hover .nav-dropdown{display:block;}
-  .nav-dropdown::before{content:'';position:absolute;top:-8px;left:0;right:0;height:8px;}
-  .nav-dropdown li a{
-    display:block;padding:12px 18px;
-    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;
-    color:rgba(93,122,148,.8);text-decoration:none;text-transform:uppercase;
-    border-bottom:1px solid rgba(93,122,148,.1);transition:color .2s,background .2s;
-  }
-  .nav-dropdown li:last-child a{border-bottom:none;}
-  .nav-dropdown li a:hover{color:var(--white);background:rgba(93,122,148,.08);}
-
-  /* HERO */
+/* HERO */
   .hero{
     padding:140px 56px 72px;
     border-bottom:1px solid rgba(93,122,148,.1);
@@ -120,7 +79,6 @@
     mask-composite:intersect;
   }
 
-  /* PAST PERFORMANCE */
   .past-perf{
     padding:80px 56px;
     border-bottom:1px solid rgba(93,122,148,.1);
@@ -214,7 +172,6 @@
     color:rgba(220,228,236,.4);text-transform:uppercase;
   }
 
-  /* PROGRAM DETAILS */
   .pp-details{
     display:grid;grid-template-columns:1fr 1fr;
     border:1px solid rgba(93,122,148,.1);
@@ -248,16 +205,7 @@
     letter-spacing:.1em;color:var(--white);text-transform:uppercase;
     margin-bottom:28px;
   }
-  .spec-list{list-style:none;border-top:1px solid rgba(93,122,148,.1);}
-  .spec-list li{
-    display:flex;justify-content:space-between;align-items:baseline;
-    padding:12px 0;border-bottom:1px solid rgba(93,122,148,.07);gap:20px;
-  }
-  .spec-list li:last-child{border-bottom:none;}
-  .spec-k{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;color:var(--stone);text-transform:uppercase;white-space:nowrap;flex-shrink:0;}
-  .spec-v{font-size:14px;font-weight:300;color:var(--white);text-align:right;}
-
-  /* PACKAGING TYPES */
+/* PACKAGING TYPES */
   .pkg-types{
     padding:80px 56px;
     background:var(--bg2);
@@ -315,24 +263,7 @@
     color:rgba(93,122,148,.55);border:1px solid rgba(93,122,148,.15);
     padding:4px 10px;text-transform:uppercase;
   }
-
-  /* STANDARDS */
-  .standards{
-    padding:26px 56px;
-    display:flex;align-items:center;gap:36px;flex-wrap:wrap;
-    background:var(--bg);
-    border-bottom:1px solid rgba(93,122,148,.1);
-  }
-  .std-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--fog);text-transform:uppercase;white-space:nowrap;}
-  .std-list{display:flex;gap:8px;flex-wrap:wrap;}
-  .std{
-    font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;
-    color:rgba(142,136,114,.65);border:1px solid rgba(142,136,114,.16);
-    padding:5px 13px;text-transform:uppercase;
-  }
-  .std.hi{color:rgba(196,98,45,.8);border-color:rgba(196,98,45,.25);}
-
-  /* CTA */
+/* CTA */
   .cta{
     padding:88px 56px;
     display:flex;align-items:center;justify-content:space-between;gap:48px;flex-wrap:wrap;
@@ -342,16 +273,33 @@
   .cta h2{font-family:'Oswald',sans-serif;font-weight:300;font-size:clamp(34px,4vw,52px);letter-spacing:.08em;color:var(--white);text-transform:uppercase;line-height:1.05;}
   .cta h2 strong{font-weight:600;color:var(--stone);}
   .cta p{font-size:15px;font-weight:300;color:var(--fog);max-width:360px;margin-top:14px;line-height:1.8;font-style:italic;}
+/* ANIMATIONS */
+to{opacity:1;transform:none;}}
 
-  /* FOOTER */
-  footer{padding:26px 56px;border-top:1px solid rgba(93,122,148,.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
-  footer span{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;color:rgba(180,180,180,.45);text-transform:uppercase;}
-
-  /* ANIMATIONS */
-  @keyframes rise{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
-  .r1{animation:rise .8s ease .1s both;}
-  .r2{animation:rise .8s ease .25s both;}
-  .r3{animation:rise .8s ease .4s both;}
+  @media(max-width:1024px){
+    .hero{flex-direction:column;padding:110px 32px 40px;gap:32px;}
+    .hero-content{min-width:0 !important;flex:1;}
+    .hero-image{flex:none !important;width:100% !important;max-width:480px;margin:0 auto !important;}
+    .summary{grid-template-columns:1fr !important;}
+    .summary-img-col,.summary-left-img-col{display:none;}
+    .summary-text-col{border-left:none !important;padding:48px 32px !important;}
+    .summary-inner{grid-template-columns:1fr !important;gap:0 !important;}
+    .summary-right{padding:0 !important;}
+  }
+  @media(max-width:768px){
+    .hero{padding:90px 20px 32px;gap:24px;}
+    .hero-image{display:none;}
+    .hero h1{font-size:clamp(42px,12vw,72px);}
+    .hero-desc{max-width:100%;}
+    .hero-desc::before{height:60px;}
+    .summary-text-col{padding:40px 20px !important;}
+    .capabilities{padding:40px 20px;}
+    .cta{padding:48px 20px;flex-direction:column !important;gap:24px;align-items:flex-start;}
+    .programs-header{padding:32px 20px 0;}
+    .program{padding:32px 20px;}
+    .standards{padding:16px 20px;}
+    .app-card{flex:0 0 calc(50% - 3px) !important;}
+  }
 </style>
 </head>
 <body>
@@ -359,6 +307,7 @@
 <!-- NAV -->
 <nav>
   <a href="index.html"><img class="nav-logo" src="../Images/Logo/Simple (Star) no bg.png" alt="Liberator Packaging"></a>
+  <button class="nav-toggle" aria-label="Open navigation" aria-expanded="false"><span></span><span></span><span></span></button>
   <ul class="nav-links">
     <li class="has-dropdown">
       <a href="#">Capabilities</a>
@@ -381,6 +330,7 @@
     </li>
     <li><a href="compliance.html">Compliance</a></li>
     <li><a href="about.html">About</a></li>
+    <a href="contact.html" class="nav-mobile-cta">Contact Us</a>
   </ul>
   <a href="contact.html" class="nav-cta">Contact Us</a>
 </nav>
@@ -591,5 +541,6 @@
   }
 </script>
 
+<script src="site.js" defer></script>
 </body>
 </html>
