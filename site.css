@@ -146,14 +146,6 @@ footer span{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12
   nav{padding:10px 32px;}
   footer{padding:24px 32px;}
 
-  .hero{flex-direction:column !important;padding:110px 32px 40px !important;}
-  .hero *{min-width:0 !important;}
-  .hero-image{display:none;}
-
-  .summary{grid-template-columns:1fr !important;}
-  .summary-img-col{display:none;}
-  .summary-text-col{border-left:none !important;padding:40px 24px !important;}
-
   /* programs */
   .programs-header{padding:48px 32px 0;}
   .programs-header h2{font-size:32px;}
@@ -173,23 +165,18 @@ footer span{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12
 ═══════════════════════════════════════════════ */
 @media(max-width:768px){
 
-  .hero{flex-direction:column !important;padding:110px 32px 40px !important;}
-  .hero *{min-width:0 !important;}
-  .hero-image{display:none;}
-
-  .summary{grid-template-columns:1fr !important;}
-  .summary-img-col{display:none;}
-  .summary-text-col{border-left:none !important;padding:40px 24px !important;}
-
   /* ── MOBILE NAV ── */
   nav{padding:10px 20px;}
   .nav-logo{height:48px;}
   .nav-toggle{display:flex;}
 
   /* desktop links → slide-down panel */
+  /* position:absolute rather than fixed because backdrop-filter on nav
+     creates a containing block, making fixed children relative to the nav bar */
   .nav-links{
     display:none;
-    position:fixed;top:68px;left:0;right:0;bottom:0;
+    position:absolute;top:100%;left:0;right:0;
+    height:calc(100vh - 100%);
     flex-direction:column;
     padding:16px 0 40px;
     background:rgba(17,26,36,0.99);
@@ -208,16 +195,14 @@ footer span{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12
   }
   .nav-links>li:last-child>a{border-bottom:none;}
 
-  /* mobile dropdowns — collapsed by default, tap header to expand */
-  .has-dropdown>a::after{content:' ▾';transition:transform .2s;}
-  .has-dropdown.open>a::after{content:' ▴';}
+  /* mobile dropdowns — always visible, indented */
+  .has-dropdown>a::after{content:' ▾';}
   .nav-dropdown{
-    display:none;position:static;
+    display:block;position:static;
     margin:0;border:none;border-top:none;
     background:rgba(23,32,48,.6);
     backdrop-filter:none;min-width:auto;
   }
-  .has-dropdown.open .nav-dropdown{display:block;}
   .nav-dropdown li a{
     padding:10px 24px 10px 36px;
     font-size:11px;border-bottom:none;
