@@ -49,13 +49,28 @@
 
   /* SUMMARY */
   .summary{
-    padding:80px 56px;
     background:var(--bg2);
     border-bottom:1px solid rgba(93,122,148,.1);
+    display:grid;
+    grid-template-columns:1fr 1.4fr;
+    overflow:hidden;
   }
-  .summary-inner{
-    display:grid;grid-template-columns:1fr 1.5fr;
-    gap:80px;align-items:start;
+  .summary-img-col{
+    overflow:hidden;
+  }
+  .summary-img-col img{
+    width:80%;height:auto;display:block;
+    -webkit-mask-image:linear-gradient(to right, black 50%, transparent 100%),
+                       linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-composite:destination-in;
+    mask-image:linear-gradient(to right, black 50%, transparent 100%),
+               linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+    mask-composite:intersect;
+  }
+  .summary-text-col{
+    padding:64px 56px;
+    display:flex;flex-direction:column;justify-content:center;
+    border-left:1px solid rgba(93,122,148,.08);
   }
   .section-tag{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--copper);text-transform:uppercase;margin-bottom:20px;}
   .summary-left h2{font-family:'Oswald',sans-serif;font-weight:300;font-size:38px;letter-spacing:.08em;color:var(--white);text-transform:uppercase;line-height:1.1;}
@@ -196,7 +211,7 @@
   .app-arrow:hover{border-color:rgba(196,98,45,.45);color:var(--copper);}
 
   /* ANIMATIONS */
-to{opacity:1;transform:none;}}
+to{opacity:1;transform:none;}
 
   @media(max-width:1024px){
     .hero{flex-direction:column;padding:110px 32px 40px;gap:32px;}
@@ -299,28 +314,26 @@ to{opacity:1;transform:none;}}
 
 <!-- SUMMARY -->
 <section class="summary">
-  <div class="summary-inner">
-    <div class="summary-left">
-      <h2>Built to drawing.<br><strong>Built to last.</strong></h2>
-    </div>
-    <div class="summary-right">
-      <p>We manufacture wooden crates and export containers directly from custom designs or customer-supplied drawings — materials, fasteners, dimensions, and markings executed to spec without substitution. Whether it's a munitions crate or precision CNC-machined ordnance packaging, our process is the same. Don't have a drawing? No problem, we can engineer a solution for you or create one based on pictures and/or specs.</p>
-      <div class="summary-pillars">
-        <div class="pillar">
-          <div class="pillar-label">Construction</div>
-          <div class="pillar-val">Durability</div>
-          <div class="pillar-desc">Heavy-duty lumber and hardware selected to survive field conditions, long-term storage, and transit in the US or overseas.</div>
-        </div>
-        <div class="pillar">
-          <div class="pillar-label">Craftsmanship</div>
-          <div class="pillar-val">Top-Tier Workmanship</div>
-          <div class="pillar-desc">CNC precision, CAD based production, and scalable solutions for 0-defect production.</div>
-        </div>
-        <div class="pillar">
-          <div class="pillar-label">Standards</div>
-          <div class="pillar-val">Fully Compliant</div>
-          <div class="pillar-desc">Mil-Spec, ASTM, and ISPM-15 standards met on every build — no substitutions.</div>
-        </div>
+  <div class="summary-img-col">
+    <img src="Images/UnionTech (dark).png" alt="UnionTech">
+  </div>
+  <div class="summary-text-col">
+    <p>We manufacture wooden crates and export containers directly from custom designs or customer-supplied drawings — materials, fasteners, dimensions, and markings executed to spec without substitution. Whether it's a munitions crate or precision CNC-machined ordnance packaging, our process is the same. Don't have a drawing? No problem, we can engineer a solution for you or create one based on pictures and/or specs.</p>
+    <div class="summary-pillars">
+      <div class="pillar">
+        <div class="pillar-label">Construction</div>
+        <div class="pillar-val">Durability</div>
+        <div class="pillar-desc">Heavy-duty lumber and hardware selected to survive field conditions, long-term storage, and transit in the US or overseas.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-label">Craftsmanship</div>
+        <div class="pillar-val">Top-Tier Workmanship</div>
+        <div class="pillar-desc">CNC precision, CAD based production, and scalable solutions for 0-defect production.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-label">Standards</div>
+        <div class="pillar-val">Fully Compliant</div>
+        <div class="pillar-desc">Mil-Spec, ASTM, and ISPM-15 standards met on every build — no substitutions.</div>
       </div>
     </div>
   </div>
