@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom Packaging Solutions · Liberator Packaging</title>
+<link rel="stylesheet" href="site.css">
+<style>
+/* HERO */
+  .hero{
+    padding:140px 56px 72px;
+    border-bottom:1px solid rgba(93,122,148,.1);
+  }
+  .hero-tag{
+    font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.2em;
+    color:var(--copper);text-transform:uppercase;margin-bottom:32px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .hero-tag::before{content:'';width:32px;height:1px;background:var(--copper);}
+  .hero h1{
+    font-family:'Oswald',sans-serif;font-weight:600;
+    font-size:clamp(56px,8vw,88px);letter-spacing:.05em;
+    line-height:.88;color:var(--stone);text-transform:uppercase;
+    max-width:720px;margin-bottom:48px;
+  }
+  .hero h1 em{
+    font-style:normal;font-weight:300;font-size:.48em;letter-spacing:.26em;
+    color:rgba(142,136,114,.32);display:block;margin-top:16px;
+  }
+  .hero-desc{
+    display:flex;gap:20px;align-items:flex-start;max-width:540px;
+  }
+  .hero-desc::before{content:'';flex:0 0 3px;height:100px;background:var(--copper);margin-top:5px;}
+  .hero-desc p{font-size:17px;font-weight:300;line-height:1.85;color:var(--fog);font-style:italic;}
+
+  /* SUMMARY */
+  .summary{
+    padding:56px 56px 0px 56px;
+    background:var(--bg2);
+    border-bottom:1px solid rgba(93,122,148,.1);
+    overflow:hidden;
+  }
+  .summary-inner{
+    display:grid;grid-template-columns:1fr 1.2fr;
+    gap:64px;align-items:stretch;
+  }
+  .summary-right>p{font-size:16px;font-weight:300;line-height:1.9;color:var(--fog);margin-bottom:40px;}
+  .summary-pillars{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid rgba(93,122,148,.12);}
+  .pillar{padding:22px 24px;border-right:1px solid rgba(93,122,148,.12);}
+  .pillar:last-child{border-right:none;}
+  .pillar-label{font-family:'Space Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.18em;color:var(--copper);text-transform:uppercase;margin-bottom:8px;opacity:0.85;}
+  .pillar-val{font-family:'Oswald',sans-serif;font-weight:400;font-size:18px;letter-spacing:.06em;color:var(--white);text-transform:uppercase;margin-bottom:8px;}
+  .pillar-desc{font-size:13px;font-weight:300;line-height:1.7;color:rgba(220,228,236,.4);}
+  .summary-photo{position:relative;overflow:hidden;min-height:380px;}
+  .summary-photo img{
+    width:100%;height:80%;object-fit:cover;display:block;
+    filter:saturate(0.7) brightness(0.85);
+    -webkit-mask-image:linear-gradient(to left, transparent 0%, black 22%),
+                       linear-gradient(to right, transparent 0%, black 22%),
+                       linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-composite:destination-in;
+    mask-image:linear-gradient(to left, transparent 0%, black 22%),
+               linear-gradient(to right, transparent 0%, black 22%),
+               linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+    mask-composite:intersect;
+  }
+
+  /* DESIGN PROCESS */
+  .process{
+    padding:80px 56px;
+    border-bottom:1px solid rgba(93,122,148,.1);
+  }
+  .process-hd{
+    display:flex;align-items:baseline;justify-content:space-between;
+    margin-bottom:56px;padding-bottom:20px;
+    border-bottom:1px solid rgba(93,122,148,.1);
+  }
+  .process-hd h2{
+    font-family:'Oswald',sans-serif;font-weight:600;font-size:40px;
+    letter-spacing:.06em;color:var(--white);text-transform:uppercase;line-height:1;
+  }
+  .process-hd h2 span{font-weight:300;color:var(--stone);}
+  .process-hd-sub{
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;
+    color:var(--copper);text-transform:uppercase;
+  }
+  .process-steps{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    gap:3px;
+  }
+  .process-step{
+    padding:36px 32px 40px;
+    background:var(--bg2);
+    border:1px solid rgba(93,122,148,.08);
+    position:relative;
+    transition:background .25s,border-color .25s;
+  }
+  .process-step::after{
+    content:'';position:absolute;top:0;left:0;right:0;height:2px;
+    background:var(--copper);transform:scaleX(0);transform-origin:left;
+    transition:transform .4s ease;
+  }
+  .process-step:hover::after{transform:scaleX(1);}
+  .process-step:hover{background:rgba(23,32,48,.6);border-color:rgba(93,122,148,.18);}
+  .process-num{
+    font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.18em;
+    color:var(--copper);text-transform:uppercase;margin-bottom:28px;opacity:.7;
+  }
+  .process-step h3{
+    font-family:'Oswald',sans-serif;font-weight:500;font-size:22px;
+    letter-spacing:.06em;color:var(--white);text-transform:uppercase;
+    margin-bottom:16px;line-height:1.1;
+  }
+  .process-step p{
+    font-size:14px;font-weight:300;line-height:1.85;color:var(--fog);
+  }
+  .process-connector{
+    position:absolute;top:58px;right:-14px;
+    width:24px;height:1px;background:rgba(196,98,45,.35);z-index:1;
+  }
+  .process-step:last-child .process-connector{display:none;}
+
+  /* PACKAGING TYPES */
+  .pkg-types{
+    padding:80px 56px;
+    background:var(--bg2);
+    border-bottom:1px solid rgba(93,122,148,.1);
+  }
+  .pkg-header{
+    display:flex;align-items:baseline;justify-content:space-between;
+    margin-bottom:40px;padding-bottom:16px;
+    border-bottom:1px solid rgba(93,122,148,.1);
+  }
+  .pkg-header h2{font-family:'Oswald',sans-serif;font-weight:600;font-size:40px;letter-spacing:.06em;color:var(--white);text-transform:uppercase;line-height:1;}
+  .pkg-header h2 span{font-weight:300;color:var(--stone);}
+  .pkg-header-sub{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--copper);text-transform:uppercase;}
+  .pkg-set{margin-bottom:24px;}
+  .pkg-set:last-child{margin-bottom:0;}
+  .pkg-set-label{
+    font-family:'Space Mono',monospace;font-size:14px;letter-spacing:.22em;
+    color:var(--white);text-transform:uppercase;
+    display:flex;align-items:center;gap:14px;
+    padding-bottom:12px;margin-bottom:3px;
+    border-bottom:1px solid rgba(93,122,148,.1);
+  }
+  .pkg-set-label::before{content:'';width:24px;height:1px;background:var(--copper);flex-shrink:0;}
+  .pkg-set-cards{display:grid;grid-template-columns:1fr 1fr;gap:3px;}
+  .pkg-card{
+    padding:36px 32px;
+    background:var(--bg);
+    border:1px solid rgba(93,122,148,.08);
+    position:relative;
+    transition:background .25s,border-color .25s;
+  }
+  .pkg-card::after{
+    content:'';position:absolute;top:0;left:0;right:0;height:2px;
+    background:var(--copper);transform:scaleX(0);transform-origin:left;
+    transition:transform .4s ease;
+  }
+  .pkg-card:hover::after{transform:scaleX(1);}
+  .pkg-card:hover{background:rgba(23,32,48,.6);border-color:rgba(93,122,148,.18);}
+  .pkg-num{
+    font-family:'Space Mono',monospace;font-size:14px;letter-spacing:.18em;
+    color:var(--copper);text-transform:uppercase;margin-bottom:20px;opacity:.7;
+  }
+  .pkg-card h3{
+    font-family:'Oswald',sans-serif;font-weight:500;font-size:22px;
+    letter-spacing:.06em;color:var(--white);text-transform:uppercase;
+    margin-bottom:14px;line-height:1.1;
+  }
+  .pkg-card p{
+    font-size:14px;font-weight:300;line-height:1.85;color:var(--fog);
+    margin-bottom:24px;
+  }
+  .pkg-tags{display:flex;flex-wrap:wrap;gap:6px;}
+  .pkg-tag{
+    font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.12em;
+    color:rgba(93,122,148,.55);border:1px solid rgba(93,122,148,.15);
+    padding:4px 10px;text-transform:uppercase;
+  }
+
+  /* CTA */
+  .cta{
+    padding:88px 56px;
+    display:flex;align-items:center;justify-content:space-between;gap:48px;flex-wrap:wrap;
+    background:var(--bg2);
+  }
+  .cta-tag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.22em;color:var(--copper);text-transform:uppercase;margin-bottom:16px;}
+  .cta h2{font-family:'Oswald',sans-serif;font-weight:300;font-size:clamp(34px,4vw,52px);letter-spacing:.08em;color:var(--white);text-transform:uppercase;line-height:1.05;}
+  .cta h2 strong{font-weight:600;color:var(--stone);}
+  .cta p{font-size:15px;font-weight:300;color:var(--fog);max-width:360px;margin-top:14px;line-height:1.8;font-style:italic;}
+
+  /* ANIMATIONS */
+  to{opacity:1;transform:none;}
+
+  @media(max-width:1024px){
+    .hero{flex-direction:column;padding:110px 32px 40px;gap:32px;}
+    .hero-content{min-width:0 !important;flex:1;}
+    .summary{grid-template-columns:1fr !important;}
+    .summary-inner{grid-template-columns:1fr !important;gap:0 !important;}
+    .summary-right{padding:0 !important;}
+  }
+  @media(max-width:768px){
+    .hero{padding:90px 20px 32px;gap:24px;}
+    .hero h1{font-size:clamp(42px,12vw,72px);}
+    .hero-desc{max-width:100%;}
+    .hero-desc::before{height:60px;}
+    .cta{padding:48px 20px;flex-direction:column !important;gap:24px;align-items:flex-start;}
+    .process{padding:40px 20px;}
+    .process-steps{grid-template-columns:1fr 1fr !important;}
+    .process-connector{display:none;}
+    .pkg-types{padding:40px 20px;}
+    .pkg-set-cards{grid-template-columns:1fr !important;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html"><img class="nav-logo" src="../Images/Logo/Simple (Star) no bg.png" alt="Liberator Packaging"></a>
+  <button class="nav-toggle" aria-label="Open navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li class="has-dropdown">
+      <a href="#">Capabilities</a>
+      <ul class="nav-dropdown">
+        <li><a href="corrugated-packaging.html">Corrugated Packaging</a></li>
+        <li><a href="foam-cushioning.html">Foam &amp; Cushioning Systems</a></li>
+        <li><a href="wood-crating.html">Wood Crating &amp; Export Containers</a></li>
+        <li><a href="integrated-solutions.html">Engineered Integrated Solutions</a></li>
+        <li><a href="assembly-kitting.html">Assembly &amp; Kitting</a></li>
+      </ul>
+    </li>
+    <li class="has-dropdown">
+      <a href="#">Packaging Applications</a>
+      <ul class="nav-dropdown">
+        <li><a href="drones.html">Drones</a></li>
+        <li><a href="munitions.html">Munitions</a></li>
+        <li><a href="manufactured-parts.html">Manufactured Parts</a></li>
+        <li><a href="electronic-components.html">Electronic Components</a></li>
+        <li><a href="custom-packaging-solutions.html">Custom Packaging Solutions</a></li>
+      </ul>
+    </li>
+    <li><a href="compliance.html">Compliance</a></li>
+    <li><a href="about.html">About</a></li>
+    <a href="contact.html" class="nav-mobile-cta">Contact Us</a>
+  </ul>
+  <a href="contact.html" class="nav-cta">Contact Us</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag r1">Application · 05</div>
+  <h1 class="r2">Custom Packaging<em>Solutions</em></h1>
+  <div class="hero-desc r3">
+    <p>When the program doesn't fit a standard catalog — we design from scratch. Product-based, drawing-based, or requirement-based: we engineer multi-material packaging systems around what you're protecting, how it ships, and what it needs to survive.</p>
+  </div>
+</section>
+
+<!-- SUMMARY -->
+<section class="summary">
+  <div class="summary-inner">
+    <div class="summary-photo">
+      <img src="../Images/capabilities6.png" alt="Custom Packaging Solutions">
+    </div>
+    <div class="summary-right">
+      <p>Most programs don't come with a packaging solution already specified. Hardware changes, programs evolve, and off-the-shelf packaging rarely fits the geometry, compliance requirements, or operational tempo of a real defense contract. We start from the hardware itself — or from a drawing, a spec, or a set of requirements — and engineer a complete solution. That means selecting materials, designing inserts, specifying the outer container, and validating the system against the distribution environment it will see. The result is a package that fits the program, not the other way around.</p>
+      <div class="summary-pillars">
+        <div class="pillar">
+          <div class="pillar-label">Design Source</div>
+          <div class="pillar-val">Any Input</div>
+          <div class="pillar-desc">Hardware samples, customer drawings, government specs, or written requirements — we build from whatever you have.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-label">Materials</div>
+          <div class="pillar-val">Multi-Material</div>
+          <div class="pillar-desc">Corrugated, foam, wood, and barrier systems combined into a single engineered solution matched to the application.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-label">Compliance</div>
+          <div class="pillar-val">Built-In</div>
+          <div class="pillar-desc">MIL-STD-2073 packing methods, ASTM test standards, and marking requirements documented from design through delivery.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DESIGN PROCESS -->
+<section class="process">
+
+  <div class="process-hd">
+    <h2>The Design <span>Process</span></h2>
+    <span class="process-hd-sub">Steps · 04</span>
+  </div>
+
+  <div class="process-steps">
+
+    <div class="process-step">
+      <div class="process-connector"></div>
+      <div class="process-num">01</div>
+      <h3>Requirements</h3>
+      <p>We start by understanding the item, the environment it will see, and any applicable standards. Hardware sample, drawings, or a written spec — we identify fragility, compliance requirements, weight and dimension constraints, and whether the package needs to be reusable, export-compliant, or shelf-stable for long-term storage.</p>
+    </div>
+
+    <div class="process-step">
+      <div class="process-connector"></div>
+      <div class="process-num">02</div>
+      <h3>Design</h3>
+      <p>We design the full system before cutting anything. Corrugated outers are drawn in ArtiosCAD, foam inserts are profiled to the hardware geometry, and wood structures are spec'd to load path and weight. Material selection — board grade, foam density, barrier film — is driven by what the item needs to survive, not what's in stock.</p>
+    </div>
+
+    <div class="process-step">
+      <div class="process-connector"></div>
+      <div class="process-num">03</div>
+      <h3>Prototype</h3>
+      <p>We build a first article and verify fit against the actual hardware before committing to production. Where testing is required, we validate against applicable ASTM or MIL-SPEC drop, vibration, and compression standards. Changes to fit or performance are resolved at prototype — not after a production run.</p>
+    </div>
+
+    <div class="process-step">
+      <div class="process-connector"></div>
+      <div class="process-num">04</div>
+      <h3>Production</h3>
+      <p>Once the design is validated, we scale to program volume. Specs are documented for consistent reorders — same materials, same tolerances, same result every run. As the program evolves, we update the design to match. The package grows with the program.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- PACKAGING TYPES -->
+<section class="pkg-types">
+  <div class="pkg-header">
+    <div>
+      <h2>Custom Solutions <span>By Design Source</span></h2>
+    </div>
+    <span class="pkg-header-sub"></span>
+  </div>
+
+  <!-- Design Source -->
+  <div class="pkg-set">
+    <div class="pkg-set-label">Design Source</div>
+    <div class="pkg-set-cards">
+      <div class="pkg-card">
+        <div class="pkg-num">01</div>
+        <h3>Hardware-Based</h3>
+        <p>Send us the item — or dimensions and photos — and we design packaging around the actual geometry. Foam inserts are toleranced to the part, outer containers are sized to the foam system, and the result is a complete package that fits on the first build.</p>
+        <div class="pkg-tags">
+          <span class="pkg-tag">Reverse-Engineered</span>
+          <span class="pkg-tag">Prototype First</span>
+          <span class="pkg-tag">Production-Ready</span>
+        </div>
+      </div>
+      <div class="pkg-card">
+        <div class="pkg-num">02</div>
+        <h3>Drawing-Based</h3>
+        <p>Government or customer-supplied drawings and specifications welcome. We manufacture to the drawing, validate against applicable standards, and document the design for repeatable production. PPP, MIL-SPEC, and ASTM references all supported.</p>
+        <div class="pkg-tags">
+          <span class="pkg-tag">PPP Specs</span>
+          <span class="pkg-tag">MIL-SPEC</span>
+          <span class="pkg-tag">ASTM Compliant</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application -->
+  <div class="pkg-set">
+    <div class="pkg-set-label">Application</div>
+    <div class="pkg-set-cards">
+      <div class="pkg-card">
+        <div class="pkg-num">01</div>
+        <h3>Long-Term Storage</h3>
+        <p>Packaging engineered for depot, warehouse, or pre-positioned stock with extended shelf life requirements. Barrier systems, desiccant, humidity indicator cards, and sealed construction protect against environmental degradation over the storage period.</p>
+        <div class="pkg-tags">
+          <span class="pkg-tag">Barrier Systems</span>
+          <span class="pkg-tag">Desiccant</span>
+          <span class="pkg-tag">MIL-PRF-131</span>
+        </div>
+      </div>
+      <div class="pkg-card">
+        <div class="pkg-num">02</div>
+        <h3>Export &amp; International Shipment</h3>
+        <p>Custom wood crates and export containers built to ISPM-15 requirements for international shipment. Designed to the cargo's weight, center of gravity, and load path — with blocking, bracing, and tie-down points for over-the-road and ocean freight.</p>
+        <div class="pkg-tags">
+          <span class="pkg-tag">ISPM-15</span>
+          <span class="pkg-tag">Heavy-Lift</span>
+          <span class="pkg-tag">Ocean Freight</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div>
+    <div class="cta-tag">Ready to work</div>
+    <h2>Have a unique item or<br>need a custom solution<br><strong>designed?</strong></h2>
+    <p>Send us the hardware, a drawing, or a set of requirements — we'll engineer packaging around it. MIL-SPEC compliant, prototype-validated, and built to scale with the program.</p>
+  </div>
+  <a href="contact.html" class="nav-cta">Contact Us</a>
+</section>
+
+<footer>
+  <span>© 2026 Liberator Packaging LLC · HQ in Richardson, TX</span>
+  <span>Custom Packaging Solutions</span>
+</footer>
+
+<script src="site.js" defer></script>
+</body>
+</html>
