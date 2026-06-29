@@ -160,12 +160,6 @@
   .branches-track-wrap::after{right:0;background:linear-gradient(to left,var(--bg2),transparent);}
   .branches-track{
     display:flex;gap:16px;width:max-content;
-    animation:scroll-branches 38s linear infinite;
-  }
-  .branches-track:hover{animation-play-state:paused;}
-  @keyframes scroll-branches{
-    0%{transform:translateX(0);}
-    100%{transform:translateX(-50%);}
   }
   .branch-card{
     flex:0 0 420px;height:200px;position:relative;overflow:hidden;
@@ -262,7 +256,6 @@ to{opacity:1;transform:none;}
     .about-vis{min-height:240px;}
     .about-text{padding:40px 24px;}
     .branches .branches-header{padding:0 20px;}
-    .branches-track{animation-duration:140s;}
     .capabilities{padding:40px 20px;}
     .cap-row{grid-template-columns:36px 1fr 20px;gap:12px;}
     .cap-detail{display:none;}
@@ -413,5 +406,40 @@ to{opacity:1;transform:none;}
 </footer>
 
 <script src="site.js" defer></script>
+<script>
+(function(){
+  var track = document.querySelector('.branches-track');
+  if(!track) return;
+  var cards = track.querySelectorAll('.branch-card');
+  var half = cards.length / 2;
+  var gap = 16;
+  var speed = window.innerWidth <= 768 ? 0.4 : 0.8;
+  var offset = 0;
+  var resetAt = 0;
+  var paused = false;
+
+  function measureReset(){
+    var card = cards[0];
+    if(!card) return;
+    resetAt = (card.offsetWidth + gap) * half;
+  }
+
+  measureReset();
+  window.addEventListener('resize', function(){ measureReset(); speed = window.innerWidth <= 768 ? 0.4 : 0.8; });
+
+  track.addEventListener('mouseenter', function(){ paused = true; });
+  track.addEventListener('mouseleave', function(){ paused = false; });
+
+  function step(){
+    if(!paused && resetAt > 0){
+      offset += speed;
+      if(offset >= resetAt) offset = 0;
+      track.style.transform = 'translateX(-' + offset + 'px)';
+    }
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+})();
+</script>
 </body>
 </html>
