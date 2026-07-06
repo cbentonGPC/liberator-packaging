@@ -413,7 +413,7 @@ to{opacity:1;transform:none;}
   var cards = track.querySelectorAll('.branch-card');
   var half = cards.length / 2;
   var gap = 16;
-  var speed = window.innerWidth <= 768 ? 1.75 : 3;
+  var speed = window.innerWidth <= 768 ? 2.25 : 3;
   var offset = 0;
   var resetAt = 0;
   var paused = false;
@@ -425,7 +425,7 @@ to{opacity:1;transform:none;}
   }
 
   measureReset();
-  window.addEventListener('resize', function(){ measureReset(); speed = window.innerWidth <= 768 ? 1.75 : 3; });
+  window.addEventListener('resize', function(){ measureReset(); speed = window.innerWidth <= 768 ? 2.25 : 3; });
 
   track.addEventListener('mouseenter', function(){ paused = true; });
   track.addEventListener('mouseleave', function(){ paused = false; });
